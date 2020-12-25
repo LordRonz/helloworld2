@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+g++ -c *.cpp
+g++ -o hello *.o -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+rm *.o
