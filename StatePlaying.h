@@ -4,8 +4,9 @@
 
 class StatePlaying : public State {
 private:
-    Card* player;
+    Deck* deck;
     void initTextures();
+    void initDecks();
 
 public:
     StatePlaying(sf::RenderWindow* window, std::stack<State*>* states);

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Card.h"
+#include "Deck.h"
 class State {
     protected:
-	std::stack<State*>* states;
-	sf::RenderWindow* window;
+	std::stack<State*>* states{};
+	sf::RenderWindow* window{};
 	std::map<std::string, sf::Texture> textures;
 	bool end{};
 

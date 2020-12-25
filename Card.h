@@ -19,14 +19,15 @@ protected:
     unsigned short val;
     sf::Texture* texture{};
     sf::Sprite* sprite{};
+    bool hover{};
 
 public:
-    Card(unsigned short kind, unsigned short val);
+    Card(unsigned short kind, unsigned short val, sf::Texture* texture);
     virtual ~Card();
 
     void createSprite(sf::Texture* texture);
     virtual void setPosition(const float x, const float y);
     virtual void move(const double& dt, const float x, const float y);
-    virtual void update(const double& dt);
+    virtual void update(const double& dt, const sf::Vector2f mousePos);
     virtual void render(sf::RenderTarget* target);
 };
