@@ -4,7 +4,7 @@
 
 class StatePlaying : public State {
 private:
-    Deck* deck;
+    std::vector<Deck*> decks;
     void initTextures();
     void initDecks();
 

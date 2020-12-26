@@ -17,7 +17,8 @@ class Card {
 protected:
     unsigned short kind;
     unsigned short val;
-    sf::Texture* texture{};
+    double movSpeed{10.f};
+    sf::Vector2f currVelocity{0.f, 0.f};
     sf::Sprite* sprite{};
     bool hover{};
 

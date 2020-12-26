@@ -13,11 +13,10 @@ Card::~Card() {
 }
 
 void Card::createSprite(sf::Texture* texture) {
-    this->texture = texture;
     this->sprite = new sf::Sprite;
-    this->sprite->setTexture(*this->texture);
-    this->sprite->setScale(.2f, .2f);
-    this->sprite->setPosition(sf::Vector2f(10, 10));
+    this->sprite->setTexture(*texture);
+    this->sprite->setScale(.75f, .75f);
+    //this->sprite->setPosition(sf::Vector2f(10, 10));
     this->sprite->setColor(sf::Color(255, 255, 255, 230));
 }
 

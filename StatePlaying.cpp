@@ -6,8 +6,11 @@ StatePlaying::StatePlaying(sf::RenderWindow* window, std::stack<State*>* states)
 }
 
 StatePlaying::~StatePlaying() {
-    //delete this->player;
-    delete this->deck;
+    for(auto& it: this->decks) {
+	delete it;
+    }
+    decks = std::vector<Deck*>();
+    //delete this->deck;
 }
 
 void StatePlaying::initTextures() {
@@ -16,15 +19,20 @@ void StatePlaying::initTextures() {
 }
 
 void StatePlaying::initDecks() {
-    this->deck = new Deck();
-    deck->addCard(new Card(1, 1, &this->textures["2C"]), "2C");
+    this->decks.push_back(new Deck(Player0));
+    this->decks[0]->addCard(new Card(1, 1, &this->textures["2C"]), "2C");
+    this->decks.push_back(new Deck(Player1));
+    this->decks[1]->addCard(new Card(1, 2, &this->textures["2C"]), "2C");
 }
 
 void StatePlaying::update(const double& dt) {
     //std::printf("Hello GameState\n");
     this->updateMousePos();
     this->updateInput(dt);
-    this->deck->update(dt, this->mousePosView);
+    for(auto& it: this->decks) {
+	it->update(dt, this->mousePosView);
+    }
+    //this->deck->update(dt, this->mousePosView);
     //printf("%f %f\n", this->mousePosView.x, this->mousePosView.y);
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	//std::printf("A\n");
@@ -32,7 +40,10 @@ void StatePlaying::update(const double& dt) {
 
 void StatePlaying::render(sf::RenderTarget* target) {
     if(!target) target = this->window;
-    this->deck->render(target);
+    //this->deck->render(target);
+    for(auto& it: this->decks) {
+	it->render(target);
+    }
 }
 
 void StatePlaying::updateInput(const double& dt) {
