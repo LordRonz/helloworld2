@@ -18,12 +18,16 @@ void StatePlaying::initTextures() {
 	printf("ERROR LOADING CARD TEXTURE\n");
     if(!this->textures["2H"].loadFromFile("res/txrs/cards/2H.png"))
 	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["3C"].loadFromFile("res/txrs/cards/3C.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
 }
 
 void StatePlaying::initDecks() {
     this->decks.push_back(new BaseDeck());
-    this->decks[0]->addCard(new Card(1, 1, &this->textures["2C"]));
-    this->decks[0]->addCard(new Card(1, 2, &this->textures["2H"]));
+    this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"]));
+    this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"]));
+    this->decks.push_back(new PlayerDeck());
+    this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
 
 void StatePlaying::update(const double& dt) {

@@ -4,15 +4,12 @@ Deck::Deck() {
 }
 
 Deck::~Deck() {
-    while(!this->cards.empty()) {
-	delete this->cards.top();
-	this->cards.pop();
-    }
+
 }
 
 void Deck::addCard(Card* card) {
-    this->cards.emplace(card);
-    this->cards.top()->setPosition(this->pos.x, this->pos.y);
+    //this->cards.emplace(card);
+    //this->cards.top()->setPosition(this->pos.x, this->pos.y);
 }
 
 void Deck::update(const double& dt, const sf::Vector2f mousePos) {
@@ -27,4 +24,9 @@ void Deck::render(sf::RenderTarget* target) {
 
 const sf::Vector2f Deck::getPosition() {
     return this->pos;
+}
+
+void Deck::setPosition(const float x, const float y) {
+    this->pos.x = x;
+    this->pos.y = y;
 }

@@ -6,7 +6,6 @@ enum deck_type {Player0, Player1, Player2};
 
 class Deck {
 protected:
-    std::stack<Card*> cards;
     sf::Vector2f pos;
     unsigned short type;
     
@@ -17,4 +16,5 @@ public:
     virtual void render(sf::RenderTarget* target);
     virtual void addCard(Card* card);
     const sf::Vector2f getPosition();
+    virtual void setPosition(const float x, const float y);
 };

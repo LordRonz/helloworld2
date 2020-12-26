@@ -49,3 +49,11 @@ void Card::render(sf::RenderTarget* target) {
     if(this->sprite)
 	target->draw(*this->sprite);
 }
+
+unsigned short Card::getKind() {
+    return this->kind;
+}
+
+unsigned short Card::getVal() {
+    return this->val;
+}

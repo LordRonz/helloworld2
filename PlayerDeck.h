@@ -1,13 +1,13 @@
 #pragma once
 
-#include "PlayerDeck.h"
+#include "Deck.h"
 
-class BaseDeck : public Deck{
+class PlayerDeck : public Deck{
 private:
-    std::stack<Card*> cards;
+    std::map<std::string, Card*> cards;
 public:
-    BaseDeck();
-    virtual ~BaseDeck();
+    PlayerDeck();
+    virtual ~PlayerDeck();
     void addCard(Card* card);
     void update(const double& dt, const sf::Vector2f mousePos);
     void render(sf::RenderTarget* target);

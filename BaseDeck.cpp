@@ -1,8 +1,7 @@
 #include "BaseDeck.h"
 
 BaseDeck::BaseDeck() {
-    this->pos.x = 10.f;
-    this->pos.x = 10.f;
+    this->setPosition(10.f, 10.f);
 }
 
 BaseDeck::~BaseDeck() {
@@ -12,6 +11,11 @@ BaseDeck::~BaseDeck() {
     }
 }
 
+void BaseDeck::addCard(Card* card) {
+    this->cards.emplace(card);
+    this->cards.top()->setPosition(this->pos.x, this->pos.y);
+}
+
 void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
     if(!this->cards.empty()) {
     	this->cards.top()->update(dt, mousePos);
@@ -19,5 +23,6 @@ void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
 }
 
 void BaseDeck::render(sf::RenderTarget* target) {
-     this->cards.top()->render(target);
+    if(!this->cards.empty())
+	this->cards.top()->render(target);
 }

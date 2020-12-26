@@ -32,4 +32,6 @@ public:
     virtual void move(const double& dt, const float x, const float y);
     virtual void update(const double& dt, const sf::Vector2f mousePos);
     virtual void render(sf::RenderTarget* target);
+    unsigned short getKind();
+    unsigned short getVal();
 };
