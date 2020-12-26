@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <algorithm>
 #include <map>
+#include <cmath>
 
 #include "SFML/System.hpp"
 #include "SFML/Window.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Deck.h"
+#include "BaseDeck.h"
 class State {
     protected:
 	std::stack<State*>* states{};

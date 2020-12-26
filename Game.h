@@ -1,8 +1,6 @@
 #pragma once
 
 #include "StatePlaying.h"
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 
 class Game {
     private:
