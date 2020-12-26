@@ -23,10 +23,10 @@ void StatePlaying::initTextures() {
 }
 
 void StatePlaying::initDecks() {
-    this->decks.push_back(new BaseDeck());
+    this->decks.push_back(new BaseDeck(&this->decks));
     this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"]));
     this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"]));
-    this->decks.push_back(new PlayerDeck());
+    this->decks.push_back(new PlayerDeck(&this->decks));
     this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
 

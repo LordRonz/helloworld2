@@ -8,9 +8,10 @@ class Deck {
 protected:
     sf::Vector2f pos;
     unsigned short type;
+    std::vector<Deck*>* decks;
     
 public:
-    Deck();
+    Deck(std::vector<Deck*>* decks);
     virtual ~Deck();
     virtual void update(const double& dt, const sf::Vector2f mousePos);
     virtual void render(sf::RenderTarget* target);

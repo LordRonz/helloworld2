@@ -1,6 +1,7 @@
 #include "Deck.h"
 
-Deck::Deck() {
+Deck::Deck(std::vector<Deck*>* decks) {
+    this->decks = decks;
 }
 
 Deck::~Deck() {

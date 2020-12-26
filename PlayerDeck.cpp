@@ -1,6 +1,6 @@
 #include "PlayerDeck.h"
 
-PlayerDeck::PlayerDeck() {
+PlayerDeck::PlayerDeck(std::vector<Deck*>* decks) :Deck(decks) {
     this->setPosition(600.f, 500.f);
 }
 
