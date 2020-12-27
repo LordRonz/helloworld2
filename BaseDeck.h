@@ -5,6 +5,7 @@
 class BaseDeck : public Deck{
 private:
     std::stack<Card*> cards;
+    Card* dummy{};
     bool pass{};
 public:
     BaseDeck(std::vector<Deck*>* decks);

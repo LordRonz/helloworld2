@@ -1,21 +1,25 @@
 #include "Card.h"
 
-Card::Card(unsigned short kind, unsigned short val, sf::Texture* texture) {
+Card::Card(unsigned short kind, unsigned short val, sf::Texture* texture, sf::Texture* buttText) {
     this->kind = kind;
     this->val = val;
-    this->createSprite(texture);
+    this->createSprite(texture, buttText);
     //this->sprite = new sf::Sprite;
     //this->sprite->setTexture(*texture);
 }
 
 Card::~Card() {
     delete this->sprite;
+    delete this->buttSprite;
 }
 
-void Card::createSprite(sf::Texture* texture) {
+void Card::createSprite(sf::Texture* texture, sf::Texture* buttText) {
     this->sprite = new sf::Sprite;
     this->sprite->setTexture(*texture);
     this->sprite->setScale(.75f, .75f);
+    this->buttSprite = new sf::Sprite;
+    this->buttSprite->setTexture(*buttText);
+    this->buttSprite->setScale(.75f, .75f);
     //this->sprite->setPosition(sf::Vector2f(10, 10));
     this->sprite->setColor(sf::Color(255, 255, 255, 230));
 }
@@ -31,6 +35,7 @@ void Card::move(const double& dt, const float dir_x, const float dir_y) {
     sf::Vector2f dir = sf::Vector2f(dir_x - this->sprite->getPosition().x, dir_y - this->sprite->getPosition().y);
     sf::Vector2f dirNorm = dir / static_cast<float>(std::sqrt(std::pow(dir.x, 2) + std::pow(dir.y, 2)));
     this->sprite->move(dirNorm * movSpeed);
+    this->buttSprite->move(dirNorm * movSpeed);
 }
 
 void Card::update(const double& dt, const sf::Vector2f mousePos) {
@@ -49,12 +54,16 @@ void Card::update(const double& dt, const sf::Vector2f mousePos) {
 }
 
 void Card::render(sf::RenderTarget* target) {
-    if(this->sprite)
-	target->draw(*this->sprite);
+    if(this->sprite && this->buttSprite)
+	target->draw(this->butt ? *this->buttSprite : *this->sprite);
 }
 
 const sf::Vector2f Card::getPosition() {
     return this->sprite->getPosition();
+}
+
+void Card::flip() {
+    butt = !butt;
 }
 
 unsigned short Card::getKind() {

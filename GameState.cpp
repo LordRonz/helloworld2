@@ -18,7 +18,7 @@ void GameState::initTextures() {
     //	printf("ERROR LOADING CARD TEXTURE\n");
     std::string path = "res/txrs/cards/";
     std::vector<std::string> crds{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-    for(std::string& c: crds) {
+    for(const std::string& c: crds) {
 	if(!this->textures[c + "C"].loadFromFile(path + c + "C.png"))
 	    printf("ERROR LOADING CARD TEXTURE\n");
 	if(!this->textures[c + "H"].loadFromFile(path + c + "H.png"))
@@ -36,13 +36,14 @@ void GameState::initTextures() {
 
 void GameState::initDecks() {
     this->decks.push_back(new BaseDeck(&this->decks));
-    this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"]));
-    this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"]));
-    this->decks[0]->addCard(new Card(4, 2, &this->textures["2S"]));
-    this->decks[0]->addCard(new Card(1, 2, &this->textures["2D"]));
-    this->decks[0]->addCard(new Card(3, 3, &this->textures["3C"]));
-    this->decks[0]->addCard(new Card(2, 3, &this->textures["3H"]));
-    this->decks[0]->addCard(new Card(4, 3, &this->textures["3S"]));
+    this->decks[0]->addCard(new Card(0, 0, &this->textures["BUTT"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(4, 2, &this->textures["2S"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(1, 2, &this->textures["2D"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(3, 3, &this->textures["3C"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(2, 3, &this->textures["3H"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(4, 3, &this->textures["3S"], &this->textures["BUTT"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }

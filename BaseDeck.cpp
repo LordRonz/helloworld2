@@ -12,6 +12,11 @@ BaseDeck::~BaseDeck() {
 }
 
 void BaseDeck::addCard(Card* card) {
+    if(!this->cardCount++) {
+	this->dummy = card;
+	this->dummy->setPosition(this->pos.x, this->pos.y);
+	return;
+    }
     this->cards.emplace(card);
     this->cards.top()->setPosition(this->pos.x, this->pos.y);
 }
@@ -25,7 +30,7 @@ void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
 	float dist = std::sqrt(std::pow((this->cards.top()->getPosition().x - 500.f), 2) + std::pow((this->cards.top()->getPosition().y - 600.f), 2));
 	//std::printf("%f\n", dist);
 	//system("cls");
-	if(dist > 15.f) {
+	if(dist > 60.f) {
 	    this->cards.top()->move(dt, 500.f, 600.f);
 	}
 	else {
@@ -37,11 +42,14 @@ void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
 void BaseDeck::render(sf::RenderTarget* target) {
     if(!this->cards.empty())
 	this->cards.top()->render(target);
+
+    this->dummy->render(target);
 }
 
 void BaseDeck::passCard() {
     if(!this->cards.empty()) {
 	(*this->decks)[1]->addCard(this->cards.top());
+	this->cards.top()->flip();
 	this->cards.pop();
     } 
 }
