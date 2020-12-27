@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StatePlaying.h"
+#include "GameState.h"
 
 class Game {
     private:
