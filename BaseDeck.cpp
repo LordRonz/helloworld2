@@ -25,13 +25,16 @@ void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
     if(!this->cards.empty()) {
     	this->cards.top()->update(dt, mousePos);
     }    
-    //this->passCard();
+    
     if(!this->cards.empty()) {
-	float dist = std::sqrt(std::pow((this->cards.top()->getPosition().x - 500.f), 2) + std::pow((this->cards.top()->getPosition().y - 600.f), 2));
+	float dist = std::sqrt(
+	    std::pow((this->cards.top()->getPosition().x - (*this->decks)[this->passDeck]->getPosition().x), 2) + 
+	    std::pow((this->cards.top()->getPosition().y - (*this->decks)[this->passDeck]->getPosition().y), 2));
 	//std::printf("%f\n", dist);
 	//system("cls");
-	if(dist > 60.f) {
-	    this->cards.top()->move(dt, 500.f, 600.f);
+	//std::printf("%f\n", (*this->decks)[this->passDeck]->getPosition().x);
+	if(dist > 20.f) {
+	    this->cards.top()->move(dt, (*this->decks)[this->passDeck]->getPosition().x, (*this->decks)[this->passDeck]->getPosition().y);
 	}
 	else {
 	    this->passCard();
@@ -48,8 +51,9 @@ void BaseDeck::render(sf::RenderTarget* target) {
 
 void BaseDeck::passCard() {
     if(!this->cards.empty()) {
-	(*this->decks)[1]->addCard(this->cards.top());
-	this->cards.top()->flip();
+	if(this->passDeck == Player1) this->cards.top()->flip();
+	(*this->decks)[this->passDeck++]->addCard(this->cards.top());
 	this->cards.pop();
+	this->passDeck = this->passDeck == decks->size() ? 1 : this->passDeck;
     } 
 }

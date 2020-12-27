@@ -45,6 +45,7 @@ void GameState::initDecks() {
     this->decks[0]->addCard(new Card(2, 3, &this->textures["3H"], &this->textures["BUTT"]));
     this->decks[0]->addCard(new Card(4, 3, &this->textures["3S"], &this->textures["BUTT"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
+    this->decks.push_back(new CompDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
 

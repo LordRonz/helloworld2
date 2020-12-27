@@ -7,6 +7,7 @@ private:
     std::stack<Card*> cards;
     Card* dummy{};
     bool pass{};
+    unsigned short passDeck{1};
 public:
     BaseDeck(std::vector<Deck*>* decks);
     virtual ~BaseDeck();

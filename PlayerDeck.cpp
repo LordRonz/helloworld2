@@ -1,7 +1,7 @@
 #include "PlayerDeck.h"
 
 PlayerDeck::PlayerDeck(std::vector<Deck*>* decks) :Deck(decks) {
-    this->setPosition(600.f, 480.f);
+    this->setPosition(500.f, 480.f);
 }
 
 PlayerDeck::~PlayerDeck() {
@@ -34,7 +34,7 @@ void PlayerDeck::addCard(Card* card) {
 	it.second->setPosition((1080.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
     //this->cards[tmp]->setPosition(720.f / this->cardCount, this->pos.y);
-    std::printf("%d\n", this->cardCount);
+    //std::printf("%d\n", this->cardCount);
 }
 
 void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
