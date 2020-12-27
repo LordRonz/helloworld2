@@ -14,21 +14,23 @@ GameState::~GameState() {
 }
 
 void GameState::initTextures() {
-    if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["2H"].loadFromFile("res/txrs/cards/2H.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["2D"].loadFromFile("res/txrs/cards/2D.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["2S"].loadFromFile("res/txrs/cards/2S.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["3C"].loadFromFile("res/txrs/cards/3C.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["3H"].loadFromFile("res/txrs/cards/3H.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["3D"].loadFromFile("res/txrs/cards/3D.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
-    if(!this->textures["3S"].loadFromFile("res/txrs/cards/3S.png"))
+    //if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
+    //	printf("ERROR LOADING CARD TEXTURE\n");
+    std::string path = "res/txrs/cards/";
+    std::vector<std::string> crds{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    for(std::string& c: crds) {
+	if(!this->textures[c + "C"].loadFromFile(path + c + "C.png"))
+	    printf("ERROR LOADING CARD TEXTURE\n");
+	if(!this->textures[c + "H"].loadFromFile(path + c + "H.png"))
+	    printf("ERROR LOADING CARD TEXTURE\n");
+	if(!this->textures[c + "D"].loadFromFile(path + c + "D.png"))
+	    printf("ERROR LOADING CARD TEXTURE\n");
+	if(!this->textures[c + "S"].loadFromFile(path + c + "S.png"))
+	    printf("ERROR LOADING CARD TEXTURE\n");
+
+	//printf("%c\n", c);
+    }
+    if(!this->textures["BUTT"].loadFromFile("res/txrs/cards/blue_back.png"))
 	printf("ERROR LOADING CARD TEXTURE\n");
 }
 
