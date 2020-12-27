@@ -26,8 +26,11 @@ void Card::setPosition(const float x, const float y) {
 }
 
 void Card::move(const double& dt, const float dir_x, const float dir_y) {
-    if(this->sprite)
-	this->sprite->move(100 * dir_x * dt, 100 * dir_y * dt);
+    //if(this->sprite)
+    //	this->sprite->move(100 * dir_x * dt, 100 * dir_y * dt);
+    sf::Vector2f dir = sf::Vector2f(dir_x - this->sprite->getPosition().x, dir_y - this->sprite->getPosition().y);
+    sf::Vector2f dirNorm = dir / static_cast<float>(std::sqrt(std::pow(dir.x, 2) + std::pow(dir.y, 2)));
+    this->sprite->move(dirNorm * movSpeed);
 }
 
 void Card::update(const double& dt, const sf::Vector2f mousePos) {
@@ -48,6 +51,10 @@ void Card::update(const double& dt, const sf::Vector2f mousePos) {
 void Card::render(sf::RenderTarget* target) {
     if(this->sprite)
 	target->draw(*this->sprite);
+}
+
+const sf::Vector2f Card::getPosition() {
+    return this->sprite->getPosition();
 }
 
 unsigned short Card::getKind() {

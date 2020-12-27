@@ -9,6 +9,7 @@ protected:
     sf::Vector2f pos;
     unsigned short type;
     std::vector<Deck*>* decks;
+    unsigned short cardCount{};
     
 public:
     Deck(std::vector<Deck*>* decks);

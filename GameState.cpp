@@ -18,7 +18,17 @@ void GameState::initTextures() {
 	printf("ERROR LOADING CARD TEXTURE\n");
     if(!this->textures["2H"].loadFromFile("res/txrs/cards/2H.png"))
 	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["2D"].loadFromFile("res/txrs/cards/2D.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["2S"].loadFromFile("res/txrs/cards/2S.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
     if(!this->textures["3C"].loadFromFile("res/txrs/cards/3C.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["3H"].loadFromFile("res/txrs/cards/3H.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["3D"].loadFromFile("res/txrs/cards/3D.png"))
+	printf("ERROR LOADING CARD TEXTURE\n");
+    if(!this->textures["3S"].loadFromFile("res/txrs/cards/3S.png"))
 	printf("ERROR LOADING CARD TEXTURE\n");
 }
 
@@ -26,6 +36,11 @@ void GameState::initDecks() {
     this->decks.push_back(new BaseDeck(&this->decks));
     this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"]));
     this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"]));
+    this->decks[0]->addCard(new Card(4, 2, &this->textures["2S"]));
+    this->decks[0]->addCard(new Card(1, 2, &this->textures["2D"]));
+    this->decks[0]->addCard(new Card(3, 3, &this->textures["3C"]));
+    this->decks[0]->addCard(new Card(2, 3, &this->textures["3H"]));
+    this->decks[0]->addCard(new Card(4, 3, &this->textures["3S"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }

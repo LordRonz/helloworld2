@@ -9,6 +9,7 @@ Deck::~Deck() {
 }
 
 void Deck::addCard(Card* card) {
+    ++this->cardCount;
     //this->cards.emplace(card);
     //this->cards.top()->setPosition(this->pos.x, this->pos.y);
 }
