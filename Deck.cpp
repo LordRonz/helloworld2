@@ -24,6 +24,10 @@ void Deck::render(sf::RenderTarget* target) {
      //this->cards["2C"]->render(target);
 }
 
+void Deck::passCard(unsigned int trgt, const double& dt) {
+
+}
+
 const sf::Vector2f Deck::getPosition() {
     return this->pos;
 }
@@ -31,4 +35,12 @@ const sf::Vector2f Deck::getPosition() {
 void Deck::setPosition(const float x, const float y) {
     this->pos.x = x;
     this->pos.y = y;
+}
+
+int Deck::getCardCount() {
+    return this->cardCount;
+}
+
+std::string Deck::getSelected() {
+    return "";
 }

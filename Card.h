@@ -27,6 +27,9 @@ protected:
     sf::Sprite* sprite{};
     sf::Sprite* buttSprite{};
     bool hover{};
+    bool selected{};
+    bool wasSelected{};
+    bool clicked{};
     bool butt{true};
 
 public:
@@ -40,6 +43,7 @@ public:
     virtual void render(sf::RenderTarget* target);
     virtual const sf::Vector2f getPosition();
     unsigned short getKind();
-    virtual void flip();
     unsigned short getVal();
+    virtual void flip();
+    const bool isClicked();
 };

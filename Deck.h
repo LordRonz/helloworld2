@@ -2,7 +2,7 @@
 
 #include "Card.h"
 
-enum deck_type {Player0, Player1, Player2};
+enum deck_type {Player0, Player1, Player2, Trash};
 
 class Deck {
 protected:
@@ -19,4 +19,7 @@ public:
     virtual void addCard(Card* card);
     const sf::Vector2f getPosition();
     virtual void setPosition(const float x, const float y);
+    virtual void passCard(unsigned int trgt, const double& dt);
+    virtual std::string getSelected();
+    int getCardCount();
 };

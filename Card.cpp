@@ -16,10 +16,10 @@ Card::~Card() {
 void Card::createSprite(sf::Texture* texture, sf::Texture* buttText) {
     this->sprite = new sf::Sprite;
     this->sprite->setTexture(*texture);
-    this->sprite->setScale(.75f, .75f);
+    this->sprite->setScale(.6f, .6f);
     this->buttSprite = new sf::Sprite;
     this->buttSprite->setTexture(*buttText);
-    this->buttSprite->setScale(.75f, .75f);
+    this->buttSprite->setScale(.6f, .6f);
     //this->sprite->setPosition(sf::Vector2f(10, 10));
     this->sprite->setColor(sf::Color(255, 255, 255, 230));
 }
@@ -44,6 +44,7 @@ void Card::update(const double& dt, const sf::Vector2f mousePos) {
 	    this->sprite->setColor(sf::Color(255, 255, 255, 255));
 	    this->hover = true;
 	}
+	this->selected = sf::Mouse::isButtonPressed(sf::Mouse::Left);
     }
     else {
 	if(this->hover) {
@@ -51,6 +52,8 @@ void Card::update(const double& dt, const sf::Vector2f mousePos) {
 	    this->hover = false;
 	}
     }
+    this->clicked = !this->selected && this->wasSelected;
+    this->wasSelected = this->selected;
 }
 
 void Card::render(sf::RenderTarget* target) {
@@ -64,6 +67,10 @@ const sf::Vector2f Card::getPosition() {
 
 void Card::flip() {
     butt = !butt;
+}
+
+const bool Card::isClicked() {
+    return this->clicked;
 }
 
 unsigned short Card::getKind() {

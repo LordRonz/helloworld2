@@ -9,15 +9,13 @@ GameState::~GameState() {
     for(auto& it: this->decks) {
 	delete it;
     }
-    decks = std::vector<Deck*>();
-    //delete this->deck;
 }
 
 void GameState::initTextures() {
     //if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
     //	printf("ERROR LOADING CARD TEXTURE\n");
     std::string path = "res/txrs/cards/";
-    std::vector<std::string> crds{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+    std::vector<std::string> crds{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     for(const std::string& c: crds) {
 	if(!this->textures[c + "C"].loadFromFile(path + c + "C.png"))
 	    printf("ERROR LOADING CARD TEXTURE\n");
@@ -43,19 +41,19 @@ void GameState::initDecks() {
 	{4, "S"}
     };
     std::map<int, std::string> val {
-	{1, "A"},
-	{2, "2"},
-	{3, "3"},
-	{4, "4"},
-	{5, "5"},
-	{6, "6"},
-	{7, "7"},
-	{8, "8"},
-	{9, "9"},
-	{10, "10"},
-	{11, "J"},
-	{12, "Q"},
-	{13, "K"}
+	{1, "2"},
+	{2, "3"},
+	{3, "4"},
+	{4, "5"},
+	{5, "6"},
+	{6, "7"},
+	{7, "8"},
+	{8, "9"},
+	{9, "10"},
+	{10, "J"},
+	{11, "Q"},
+	{12, "K"},
+	{13, "A"}
     };
     this->decks[0]->addCard(new Card(0, 0, &this->textures["BUTT"], &this->textures["BUTT"]));
     std::vector<Card*> tmp;
@@ -67,11 +65,12 @@ void GameState::initDecks() {
     }
     std::shuffle(tmp.begin(), tmp.end(), std::default_random_engine(std::random_device{}()));
     for(auto& crd: tmp) {
-	this->decks[0]->addCard(crd);
+	this->decks[Player0]->addCard(crd);
     }
     //this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"], &this->textures["BUTT"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
     this->decks.push_back(new CompDeck(&this->decks));
+    this->decks.push_back(new TrashDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
 
@@ -79,13 +78,39 @@ void GameState::update(const double& dt) {
     //std::printf("Hello GameState\n");
     this->updateMousePos();
     this->updateInput(dt);
-    for(auto& it: this->decks) {
-	it->update(dt, this->mousePosView);
-    }
-    //this->deck->update(dt, this->mousePosView);
-    //printf("%f %f\n", this->mousePosView.x, this->mousePosView.y);
+    this->updateDecks(dt);
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	//std::printf("A\n");
+}
+
+void GameState::updateDecks(const double& dt) {
+    if(this->decks[Player0]->getCardCount() > 39) {
+	int tmp = this->decks[Player0]->getCardCount();
+	this->decks[Player0]->passCard(this->passDeck, dt);
+	if(tmp != this->decks[Player0]->getCardCount()) {
+	    ++this->passDeck;
+	    this->passDeck = this->passDeck == Trash ? 1 : this->passDeck;
+	}
+    }
+    else if(!this->begin) {
+	int tmp = this->decks[Player0]->getCardCount();
+	this->decks[Player0]->passCard(Trash, dt);
+	if(tmp != this->decks[Player0]->getCardCount())
+	    this->begin = true;
+    }
+    if(this->begin) {
+	for(auto& it: this->decks) {
+	    it->update(dt, this->mousePosView);
+	}
+    }
+    if(this->decks[Player1]->getSelected() != "" || this->isPassing) {
+	//this->isPassing = true;
+	int tmp = this->decks[Player1]->getCardCount();
+	this->decks[Player1]->passCard(Trash, dt);
+	if(tmp != this->decks[Player1]->getCardCount()) {
+	    this->isPassing = false;
+	}
+    }
 }
 
 void GameState::render(sf::RenderTarget* target) {

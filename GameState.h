@@ -7,6 +7,10 @@ private:
     std::vector<Deck*> decks;
     void initTextures();
     void initDecks();
+    int passDeck{Player1};
+    bool begin{};
+    void updateDecks(const double& dt);
+    bool isPassing{};
 
 public:
     GameState(sf::RenderWindow* window, std::stack<State*>* states);
