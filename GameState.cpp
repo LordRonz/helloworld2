@@ -36,14 +36,40 @@ void GameState::initTextures() {
 
 void GameState::initDecks() {
     this->decks.push_back(new BaseDeck(&this->decks));
+    std::map<int, std::string> knd {
+	{1, "D"},
+	{2, "H"},
+	{3, "C"},
+	{4, "S"}
+    };
+    std::map<int, std::string> val {
+	{1, "A"},
+	{2, "2"},
+	{3, "3"},
+	{4, "4"},
+	{5, "5"},
+	{6, "6"},
+	{7, "7"},
+	{8, "8"},
+	{9, "9"},
+	{10, "10"},
+	{11, "J"},
+	{12, "Q"},
+	{13, "K"}
+    };
     this->decks[0]->addCard(new Card(0, 0, &this->textures["BUTT"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(2, 2, &this->textures["2H"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(4, 2, &this->textures["2S"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(1, 2, &this->textures["2D"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(3, 3, &this->textures["3C"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(2, 3, &this->textures["3H"], &this->textures["BUTT"]));
-    this->decks[0]->addCard(new Card(4, 3, &this->textures["3S"], &this->textures["BUTT"]));
+    std::vector<Card*> tmp;
+    for(auto& it1: val) {
+	for(auto& it2 : knd) {
+	    tmp.push_back(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
+	    //this->decks[0]->addCard(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
+	}
+    }
+    std::shuffle(tmp.begin(), tmp.end(), std::default_random_engine(std::random_device{}()));
+    for(auto& crd: tmp) {
+	this->decks[0]->addCard(crd);
+    }
+    //this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"], &this->textures["BUTT"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
     this->decks.push_back(new CompDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));

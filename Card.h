@@ -3,8 +3,11 @@
 #include <stack>
 #include <vector>
 #include <cstdio>
+#include <iostream>
+#include <random>
 #include <algorithm>
 #include <map>
+#include <unordered_map>
 #include <cmath>
 #include <cstdlib>
 
@@ -19,7 +22,7 @@ class Card {
 protected:
     unsigned short kind;
     unsigned short val;
-    float movSpeed{10.f};
+    float movSpeed{15.f};
     sf::Vector2f currVelocity{0.f, 0.f};
     sf::Sprite* sprite{};
     sf::Sprite* buttSprite{};
