@@ -7,6 +7,7 @@ private:
     std::vector<Deck*> decks;
     sf::Texture bgTexture;
     sf::RectangleShape bg;
+    void initVariables();
     void initBackground();
     void initTextures();
     void initDecks();
@@ -14,6 +15,9 @@ private:
     bool begin{};
     void updateDecks(const double& dt);
     bool isPassing{};
+    std::vector<bool> turn;
+    std::vector<Card*> cmpCards{};
+    const bool isValid(std::string selected);
 
 public:
     GameState(sf::RenderWindow* window, std::stack<State*>* states);

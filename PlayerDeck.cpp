@@ -1,7 +1,7 @@
 #include "PlayerDeck.h"
 
 PlayerDeck::PlayerDeck(std::vector<Deck*>* decks) :Deck(decks) {
-    this->setPosition(500.f, 480.f);
+    this->setPosition(500.f, 500.f);
 }
 
 PlayerDeck::~PlayerDeck() {
@@ -34,8 +34,13 @@ void PlayerDeck::addCard(Card* card) {
     //std::printf("%d\n", this->cardCount);
 }
 
-void PlayerDeck::passCard(unsigned int trgt, const double& dt) {
+Card* PlayerDeck::getPassedCard() {
+    return this->passedCard;
+}
+
+const bool PlayerDeck::passCard(unsigned int trgt, const double& dt) {
     if(!this->cards.empty()) {
+	this->passedCard = this->cards[this->selected];
 	float dist = std::sqrt(
 	    std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
 	    std::pow((this->cards[this->selected]->getPosition().y - (*this->decks)[trgt]->getPosition().y), 2));
@@ -51,8 +56,10 @@ void PlayerDeck::passCard(unsigned int trgt, const double& dt) {
 	    --this->cardCount;
 	    this->selected = "";
 	    this->rearrange();
+	    return true;
 	}
     }
+    return false;
 }
 
 void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
@@ -77,6 +84,10 @@ void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
 	    this->selected = tmp;
 	}
     }
+}
+
+void PlayerDeck::reset() {
+    this->selected = "";
 }
 
 void PlayerDeck::rearrange() {

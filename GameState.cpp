@@ -4,12 +4,17 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
     this->initBackground();
     this->initTextures();
     this->initDecks();
+    this->initVariables();
 }
 
 GameState::~GameState() {
     for(auto& it: this->decks) {
 	delete it;
     }
+}
+
+void GameState::initVariables() {
+    this->turn = std::vector<bool> (this->decks.size() - 2);
 }
 
 void GameState::initBackground() {
@@ -99,6 +104,7 @@ void GameState::update(const double& dt) {
 }
 
 void GameState::updateDecks(const double& dt) {
+    bool tmp = this->begin;
     if(this->decks[Player0]->getCardCount() > 39) {
 	int tmp = this->decks[Player0]->getCardCount();
 	this->decks[Player0]->passCard(this->passDeck, dt);
@@ -109,7 +115,9 @@ void GameState::updateDecks(const double& dt) {
     }
     else if(!this->begin) {
 	int tmp = this->decks[Player0]->getCardCount();
-	this->decks[Player0]->passCard(Trash, dt);
+    	this->decks[Player0]->passCard(Trash, dt);
+	if(this->cmpCards.empty())
+	    this->cmpCards.push_back(this->decks[Player0]->getPassedCard());
 	if(tmp != this->decks[Player0]->getCardCount())
 	    this->begin = true;
     }
@@ -117,15 +125,40 @@ void GameState::updateDecks(const double& dt) {
 	for(auto& it: this->decks) {
 	    it->update(dt, this->mousePosView);
 	}
-    }
-    if(this->decks[Player1]->getSelected() != "" || this->isPassing) {
-	//this->isPassing = true;
-	int tmp = this->decks[Player1]->getCardCount();
-	this->decks[Player1]->passCard(Trash, dt);
-	if(tmp != this->decks[Player1]->getCardCount()) {
-	    this->isPassing = false;
+	if(!tmp) {
+	    std::fill(this->turn.begin(), this->turn.end(), true);
 	}
     }
+    if(this->turn[Player1 - 1] && this->isValid(this->decks[Player1]->getSelected())) {
+	//this->isPassing = true;
+	//int tmp = this->decks[Player1]->getCardCount();
+	this->decks[Player1]->passCard(Trash, dt);
+    }
+    else {this->decks[Player1]->reset();}
+
+}
+
+const bool GameState::isValid(std::string selected) {
+    if(!cmpCards.empty()) {
+	char tmp;
+	switch(cmpCards.front()->getKind()) {
+	    case Diamonds:
+	        tmp = 'D';
+	        break;
+	    case Hearts:
+	        tmp = 'H';
+	        break;
+	    case Clubs:
+	        tmp = 'C';
+	        break;
+	    case Spades:
+	        tmp = 'S';
+	        break;
+	}
+	return selected.back() == tmp;
+    }
+
+    return false;
 }
 
 void GameState::render(sf::RenderTarget* target) {

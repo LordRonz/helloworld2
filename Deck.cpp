@@ -24,8 +24,14 @@ void Deck::render(sf::RenderTarget* target) {
      //this->cards["2C"]->render(target);
 }
 
-void Deck::passCard(unsigned int trgt, const double& dt) {
+void Deck::reset() {}
 
+Card* Deck::getPassedCard() {
+    return nullptr;
+}
+
+const bool Deck::passCard(unsigned int trgt, const double& dt) {
+    return 1 > 2;
 }
 
 const sf::Vector2f Deck::getPosition() {

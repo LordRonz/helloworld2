@@ -5,6 +5,7 @@
 class TrashDeck : public Deck {
 private:
     std::vector<Card*> cards;
+    Card* addedCard{};
 
 public:
     TrashDeck(std::vector<Deck*>* decks);

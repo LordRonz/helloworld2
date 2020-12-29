@@ -32,8 +32,13 @@ void CompDeck::addCard(Card* card) {
     this->cards[tmp]->setPosition(this->pos.x, this->pos.y);
 }
 
-void CompDeck::passCard(unsigned int trgt, const double& dt) {
+Card* CompDeck::getPassedCard() {
+    return this->passedCard;
+}
+
+const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
     if(!this->cards.empty()) {
+	this->passedCard = this->cards[this->selected];
 	float dist = std::sqrt(
 	    std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
 	    std::pow((this->cards[this->selected]->getPosition().y - (*this->decks)[trgt]->getPosition().y), 2));
@@ -48,8 +53,10 @@ void CompDeck::passCard(unsigned int trgt, const double& dt) {
 	    (*this->decks)[trgt]->addCard(this->cards[this->selected]);
 	    this->cards.erase(this->selected);
 	    --this->cardCount;
+	    return true;
 	}
-    } 
+    }
+    return false;
 }
 
 std::string CompDeck::getSelected() {

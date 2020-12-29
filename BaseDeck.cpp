@@ -35,8 +35,13 @@ void BaseDeck::render(sf::RenderTarget* target) {
     this->dummy->render(target);
 }
 
-void BaseDeck::passCard(unsigned int trgt, const double& dt) {
+Card* BaseDeck::getPassedCard() {
+    return this->passedCard;
+}
+
+const bool BaseDeck::passCard(unsigned int trgt, const double& dt) {
     if(!this->cards.empty()) {
+	this->passedCard = this->cards.top();
 	float dist = std::sqrt(
 	    std::pow((this->cards.top()->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) + 
 	    std::pow((this->cards.top()->getPosition().y - (*this->decks)[trgt]->getPosition().y), 2));
@@ -51,6 +56,8 @@ void BaseDeck::passCard(unsigned int trgt, const double& dt) {
 	    (*this->decks)[trgt]->addCard(this->cards.top());
 	    this->cards.pop();
 	    --this->cardCount;
+	    return true;
 	}
     }
+    return false;
 }

@@ -11,6 +11,7 @@ TrashDeck::~TrashDeck() {
 }
 
 void TrashDeck::addCard(Card* card) {
+    this->addedCard = card;
     ++this->cardCount;
     if(card) {
 	this->cards.push_back(card);

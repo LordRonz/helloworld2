@@ -19,7 +19,9 @@ public:
     virtual void addCard(Card* card);
     const sf::Vector2f getPosition();
     virtual void setPosition(const float x, const float y);
-    virtual void passCard(unsigned int trgt, const double& dt);
+    virtual const bool passCard(unsigned int trgt, const double& dt);
+    virtual Card* getPassedCard();
+    virtual void reset();
     virtual std::string getSelected();
     int getCardCount();
 };

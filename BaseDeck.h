@@ -8,6 +8,7 @@ private:
     Card* dummy{};
     bool pass{};
     unsigned short passDeck{1};
+    Card* passedCard{};
 
 public:
     BaseDeck(std::vector<Deck*>* decks);
@@ -15,5 +16,6 @@ public:
     void addCard(Card* card);
     void update(const double& dt, const sf::Vector2f mousePos);
     void render(sf::RenderTarget* target);
-    void passCard(unsigned int trgt, const double& dt);
+    const bool passCard(unsigned int trgt, const double& dt);
+    Card* getPassedCard();
 };
