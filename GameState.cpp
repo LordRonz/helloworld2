@@ -12,11 +12,11 @@ GameState::~GameState() {
 	delete it;
     }
 }
-
+//insisialisasi variable
 void GameState::initVariables() {
     this->turn = std::vector<bool> (this->decks.size() - 2);
 }
-
+//inisialisasi background
 void GameState::initBackground() {
     this->bg.setSize(
 	sf::Vector2f
@@ -31,6 +31,7 @@ void GameState::initBackground() {
     this->bg.setTexture(&this->bgTexture);
 }
 
+//inisialisasi texture
 void GameState::initTextures() {
     //if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
     //	printf("ERROR LOADING CARD TEXTURE\n");
@@ -52,6 +53,7 @@ void GameState::initTextures() {
 	printf("ERROR LOADING CARD TEXTURE\n");
 }
 
+//inisialisasi deck
 void GameState::initDecks() {
     this->decks.push_back(new BaseDeck(&this->decks));
     std::map<int, std::string> knd {
@@ -93,7 +95,7 @@ void GameState::initDecks() {
     this->decks.push_back(new TrashDeck(&this->decks));
     //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
-
+//update
 void GameState::update(const double& dt) {
     //std::printf("Hello GameState\n");
     this->updateMousePos();
@@ -102,7 +104,7 @@ void GameState::update(const double& dt) {
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	//std::printf("A\n");
 }
-
+//update tiap deck
 void GameState::updateDecks(const double& dt) {
     //First move
     bool tmp = this->begin;
@@ -166,7 +168,7 @@ void GameState::compareCards() {
 	
     }
 }
-
+//update comp
 bool GameState::updateComp(const double& dt) {
     if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
 	this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
@@ -186,7 +188,7 @@ bool GameState::updateComp(const double& dt) {
     }
     return false; 
 }
-
+//update player
 bool GameState::updatePlayer(const double& dt) {
     if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
 	if(this->decks[Player1]->passCard(Trash, dt)) {
