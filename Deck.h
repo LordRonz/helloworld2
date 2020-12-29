@@ -22,6 +22,8 @@ public:
     virtual const bool passCard(unsigned int trgt, const double& dt);
     virtual Card* getPassedCard();
     virtual void reset();
+    virtual const bool canMove(unsigned int kind);
     virtual std::string getSelected();
+    virtual void artificialStupidity(Card* card);
     int getCardCount();
 };

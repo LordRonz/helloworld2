@@ -104,6 +104,7 @@ void GameState::update(const double& dt) {
 }
 
 void GameState::updateDecks(const double& dt) {
+    //First move
     bool tmp = this->begin;
     if(this->decks[Player0]->getCardCount() > 39) {
 	int tmp = this->decks[Player0]->getCardCount();
@@ -115,11 +116,10 @@ void GameState::updateDecks(const double& dt) {
     }
     else if(!this->begin) {
 	int tmp = this->decks[Player0]->getCardCount();
-    	this->decks[Player0]->passCard(Trash, dt);
-	if(this->cmpCards.empty())
-	    this->cmpCards.push_back(this->decks[Player0]->getPassedCard());
-	if(tmp != this->decks[Player0]->getCardCount())
+    	if(this->decks[Player0]->passCard(Trash, dt)) {
+	    this->cmpCards.push_back(std::make_pair(Player0, this->decks[Player0]->getPassedCard()));
 	    this->begin = true;
+	}
     }
     if(this->begin) {
 	for(auto& it: this->decks) {
@@ -129,19 +129,19 @@ void GameState::updateDecks(const double& dt) {
 	    std::fill(this->turn.begin(), this->turn.end(), true);
 	}
     }
-    if(this->turn[Player1 - 1] && this->isValid(this->decks[Player1]->getSelected())) {
-	//this->isPassing = true;
-	//int tmp = this->decks[Player1]->getCardCount();
-	this->decks[Player1]->passCard(Trash, dt);
+    else return;
+    if(this->turn[Player2 - 1]) {
+	this->updateComp(dt);
     }
-    else {this->decks[Player1]->reset();}
-
+    else if(this->turn[Player1 - 1]){
+	this->updatePlayer(dt);
+    }
 }
 
 const bool GameState::isValid(std::string selected) {
     if(!cmpCards.empty()) {
 	char tmp;
-	switch(cmpCards.front()->getKind()) {
+	switch(cmpCards.front().second->getKind()) {
 	    case Diamonds:
 	        tmp = 'D';
 	        break;
@@ -158,6 +158,54 @@ const bool GameState::isValid(std::string selected) {
 	return selected.back() == tmp;
     }
 
+    return false;
+}
+
+void GameState::compareCards() {
+    if(this->firstMove) {
+	
+    }
+}
+
+bool GameState::updateComp(const double& dt) {
+    if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
+	this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
+    	if(this->decks[Player2]->passCard(Trash, dt)) {
+	    this->cmpCards.push_back(std::make_pair(Player2, this->decks[Player2]->getPassedCard()));
+	    this->turn[Player2 - 1] = false;
+	    this->decks[Player2]->reset();
+	}
+    }
+    else if(!this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
+	if(this->decks[Player0]->passCard(Player2, dt)) {
+	    this->turn[Player2 - 1] = false;
+	}
+    }
+    else {
+	this->decks[Player2]->reset();
+    }
+    return false; 
+}
+
+bool GameState::updatePlayer(const double& dt) {
+    if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
+	if(this->decks[Player1]->passCard(Trash, dt)) {
+	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));
+	    this->turn[Player1 - 1] = false;
+	    this->decks[Player1]->reset();
+	}
+    }
+
+    else if(!this->decks[Player1]->canMove(this->cmpCards.front().second->getKind())) {
+	if(this->decks[Player0]->passCard(Player1, dt)) {
+	    this->turn[Player1 - 1] = false;
+	}
+	else {
+	}
+    }
+    else {
+	this->decks[Player1]->reset();
+    }
     return false;
 }
 

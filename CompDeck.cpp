@@ -2,6 +2,7 @@
 
 CompDeck::CompDeck(std::vector<Deck*>* decks) :Deck(decks) {
     this->setPosition(600.f, 10.f);
+    this->selected = "";
 }
 
 CompDeck::~CompDeck() {
@@ -36,6 +37,31 @@ Card* CompDeck::getPassedCard() {
     return this->passedCard;
 }
 
+void CompDeck::artificialStupidity(Card* card) {
+    std::string tmp;
+    switch(card->getKind()) {
+	case Diamonds:
+	    tmp = "D";
+	    break;
+	case Hearts:
+	    tmp = "H";
+	    break;
+	case Clubs:
+	    tmp = "C";
+	    break;
+	case Spades:
+	    tmp = "S";
+	    break;
+    }
+    std::vector<std::string> val {"A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
+    for(auto& it: val) {
+	if(this->cards.find(it + tmp) != this->cards.end()) {
+	    this->selected = it + tmp;
+	    break;
+	}
+    }
+}
+
 const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
     if(!this->cards.empty()) {
 	this->passedCard = this->cards[this->selected];
@@ -53,6 +79,7 @@ const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
 	    (*this->decks)[trgt]->addCard(this->cards[this->selected]);
 	    this->cards.erase(this->selected);
 	    --this->cardCount;
+	    this->selected = "";
 	    return true;
 	}
     }
@@ -61,6 +88,17 @@ const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
 
 std::string CompDeck::getSelected() {
     return this->selected;
+}
+
+const bool CompDeck::canMove(unsigned int kind) {
+    for(auto& it: this->cards) {
+	if(it.second->getKind() == kind) return true;
+    }
+    return false;
+}
+
+void CompDeck::reset() {
+    this->selected = "";
 }
 
 void CompDeck::update(const double& dt, const sf::Vector2f mousePos) {
@@ -72,4 +110,7 @@ void CompDeck::update(const double& dt, const sf::Vector2f mousePos) {
 void CompDeck::render(sf::RenderTarget* target) {
     if(!this->cards.empty())
 	this->cards.begin()->second->render(target);
+    if(this->selected != "") {
+	this->cards[this->selected]->render(target);
+    }
 }

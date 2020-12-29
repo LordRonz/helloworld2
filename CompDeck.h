@@ -16,5 +16,8 @@ public:
     void update(const double& dt, const sf::Vector2f mousePos);
     void render(sf::RenderTarget* target);
     Card* getPassedCard();
+    const bool canMove(unsigned int kind);
+    void artificialStupidity(Card* card);
+    void reset();
     std::string getSelected();
 };

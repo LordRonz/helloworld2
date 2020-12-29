@@ -11,11 +11,15 @@ TrashDeck::~TrashDeck() {
 }
 
 void TrashDeck::addCard(Card* card) {
-    this->addedCard = card;
-    ++this->cardCount;
     if(card) {
+	this->addedCard = card;
+	++this->cardCount;
 	this->cards.push_back(card);
+	this->rearrange();
     }
+}
+
+void TrashDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {
 	it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);

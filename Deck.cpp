@@ -26,6 +26,10 @@ void Deck::render(sf::RenderTarget* target) {
 
 void Deck::reset() {}
 
+const bool Deck::canMove(unsigned int kind) {
+    return false;
+}
+
 Card* Deck::getPassedCard() {
     return nullptr;
 }
@@ -36,6 +40,10 @@ const bool Deck::passCard(unsigned int trgt, const double& dt) {
 
 const sf::Vector2f Deck::getPosition() {
     return this->pos;
+}
+
+void Deck::artificialStupidity(Card* card) {
+    
 }
 
 void Deck::setPosition(const float x, const float y) {

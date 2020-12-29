@@ -19,4 +19,5 @@ public:
     void reset();
     Card* getPassedCard();
     std::string getSelected();
+    const bool canMove(unsigned int kind);
 };

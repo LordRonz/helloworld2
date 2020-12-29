@@ -90,6 +90,13 @@ void PlayerDeck::reset() {
     this->selected = "";
 }
 
+const bool PlayerDeck::canMove(unsigned int kind) {
+    for(auto& it: this->cards) {
+	if(it.second->getKind() == kind) return true;
+    }
+    return false;
+}
+
 void PlayerDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {

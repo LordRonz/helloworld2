@@ -13,4 +13,5 @@ public:
     void addCard(Card* card);
     void update(const double& dt, const sf::Vector2f mousePos);
     void render(sf::RenderTarget* target);
+    void rearrange();
 };

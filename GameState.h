@@ -15,9 +15,14 @@ private:
     bool begin{};
     void updateDecks(const double& dt);
     bool isPassing{};
+    bool passCannotMove{};
+    bool updatePlayer(const double& dt);
+    bool updateComp(const double& dt);
     std::vector<bool> turn;
-    std::vector<Card*> cmpCards{};
+    std::vector<std::pair<int, Card*>> cmpCards{};
     const bool isValid(std::string selected);
+    bool firstMove{true};
+    void compareCards();
 
 public:
     GameState(sf::RenderWindow* window, std::stack<State*>* states);
