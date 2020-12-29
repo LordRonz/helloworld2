@@ -17,7 +17,7 @@ void TrashDeck::addCard(Card* card) {
     }
     int i = 1;
     for(auto& it: this->cards) {
-	it->setPosition((1080.f / (this->cardCount + 1)) * i++, this->pos.y);
+	it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 

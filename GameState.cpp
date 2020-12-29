@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : State(window, states){
+    this->initBackground();
     this->initTextures();
     this->initDecks();
 }
@@ -11,6 +12,20 @@ GameState::~GameState() {
     }
 }
 
+void GameState::initBackground() {
+    this->bg.setSize(
+	sf::Vector2f
+    	(
+	    static_cast<float>(this->window->getSize().x),
+	    static_cast<float>(this->window->getSize().y)
+	)
+    );
+
+    if(!this->bgTexture.loadFromFile("res/txrs/bg/bg.png"))
+	std::printf("ERROR LOADING BG TEXTURE\n");
+    this->bg.setTexture(&this->bgTexture);
+}
+
 void GameState::initTextures() {
     //if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
     //	printf("ERROR LOADING CARD TEXTURE\n");
@@ -18,13 +33,13 @@ void GameState::initTextures() {
     std::vector<std::string> crds{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     for(const std::string& c: crds) {
 	if(!this->textures[c + "C"].loadFromFile(path + c + "C.png"))
-	    printf("ERROR LOADING CARD TEXTURE\n");
+	    std::printf("ERROR LOADING CARD TEXTURE\n");
 	if(!this->textures[c + "H"].loadFromFile(path + c + "H.png"))
-	    printf("ERROR LOADING CARD TEXTURE\n");
+	    std::printf("ERROR LOADING CARD TEXTURE\n");
 	if(!this->textures[c + "D"].loadFromFile(path + c + "D.png"))
-	    printf("ERROR LOADING CARD TEXTURE\n");
+	    std::printf("ERROR LOADING CARD TEXTURE\n");
 	if(!this->textures[c + "S"].loadFromFile(path + c + "S.png"))
-	    printf("ERROR LOADING CARD TEXTURE\n");
+	    std::printf("ERROR LOADING CARD TEXTURE\n");
 
 	//printf("%c\n", c);
     }
@@ -116,6 +131,7 @@ void GameState::updateDecks(const double& dt) {
 void GameState::render(sf::RenderTarget* target) {
     if(!target) target = this->window;
     //this->deck->render(target);
+    target->draw(this->bg);
     for(auto& it: this->decks) {
 	it->render(target);
     }

@@ -5,6 +5,9 @@
 class GameState : public State {
 private:
     std::vector<Deck*> decks;
+    sf::Texture bgTexture;
+    sf::RectangleShape bg;
+    void initBackground();
     void initTextures();
     void initDecks();
     int passDeck{Player1};

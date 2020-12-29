@@ -82,7 +82,7 @@ void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
 void PlayerDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {
-	it.second->setPosition((1080.f / (this->cardCount + 1)) * i++, this->pos.y);
+	it.second->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 
