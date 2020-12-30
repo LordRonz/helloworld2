@@ -4,8 +4,8 @@
 
 class PlayerDeck : public Deck{
 private:
-    std::unordered_map<std::string, Card*> cards;
-    std::string selected;
+    std::vector<Card*> cards;
+    int selected;
     Card* passedCard{};
 
 public:
@@ -18,6 +18,7 @@ public:
     void rearrange();
     void reset();
     Card* getPassedCard();
-    std::string getSelected();
+    const int getSelected();
     const bool canMove(unsigned int kind);
+    unsigned short getKindAtIndex(int index);
 };

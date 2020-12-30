@@ -140,26 +140,9 @@ void GameState::updateDecks(const double& dt) {
     }
 }
 
-const bool GameState::isValid(std::string selected) {
-    if(!cmpCards.empty()) {
-	char tmp;
-	switch(cmpCards.front().second->getKind()) {
-	    case Diamonds:
-	        tmp = 'D';
-	        break;
-	    case Hearts:
-	        tmp = 'H';
-	        break;
-	    case Clubs:
-	        tmp = 'C';
-	        break;
-	    case Spades:
-	        tmp = 'S';
-	        break;
-	}
-	return selected.back() == tmp;
-    }
-
+const bool GameState::isValid(int selected) {
+    if(this->begin && !this->cmpCards.empty())
+	return this->cmpCards.front().second->getKind() == this->decks[Player1]->getKindAtIndex(selected);
     return false;
 }
 
@@ -171,7 +154,7 @@ void GameState::compareCards() {
 //update comp
 bool GameState::updateComp(const double& dt) {
     if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
-	if(this->decks[Player2]->getSelected() == "")
+	if(this->decks[Player2]->getSelected() == -1)
 	    this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
     	if(this->decks[Player2]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player2, this->decks[Player2]->getPassedCard()));

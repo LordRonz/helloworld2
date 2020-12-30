@@ -4,8 +4,8 @@
 
 class CompDeck : public Deck {
 private:
-    std::unordered_map<std::string, Card*> cards;
-    std::string selected;
+    std::vector<Card*> cards;
+    int selected;
     Card* passedCard;
 
 public:
@@ -19,5 +19,5 @@ public:
     const bool canMove(unsigned int kind);
     void artificialStupidity(Card* card);
     void reset();
-    std::string getSelected();
+    const int getSelected();
 };

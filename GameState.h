@@ -20,7 +20,7 @@ private:
     bool updateComp(const double& dt);
     std::vector<bool> turn;
     std::vector<std::pair<int, Card*>> cmpCards{};
-    const bool isValid(std::string selected);
+    const bool isValid(int selected);
     bool firstMove{true};
     void compareCards();
 

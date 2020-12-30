@@ -55,6 +55,10 @@ int Deck::getCardCount() {
     return this->cardCount;
 }
 
-std::string Deck::getSelected() {
-    return "";
+const int Deck::getSelected() {
+    return -1;
+}
+
+unsigned short Deck::getKindAtIndex(int index) {
+    return 0;
 }

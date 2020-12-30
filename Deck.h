@@ -23,7 +23,8 @@ public:
     virtual Card* getPassedCard();
     virtual void reset();
     virtual const bool canMove(unsigned int kind);
-    virtual std::string getSelected();
+    virtual const int getSelected();
     virtual void artificialStupidity(Card* card);
     int getCardCount();
+    virtual unsigned short getKindAtIndex(int index);
 };

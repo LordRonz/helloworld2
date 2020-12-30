@@ -2,48 +2,19 @@
 
 PlayerDeck::PlayerDeck(std::vector<Deck*>* decks) :Deck(decks) {
     this->setPosition(500.f, 500.f);
+    this->selected = -1;
 }
 
 PlayerDeck::~PlayerDeck() {
     for(auto& it: this->cards) {
-	delete it.second;
+	delete it;
     }
     this->cards.clear();
 }
 
 void PlayerDeck::addCard(Card* card) {
     ++this->cardCount;
-    std::map<unsigned short, std::string> val {
-	{1, "2"},
-	{2, "3"},
-	{3, "4"},
-	{4, "5"},
-	{5, "6"},
-	{6, "7"},
-	{7, "8"},
-	{8, "9"},
-	{9, "10"},
-	{10, "J"},
-	{11, "Q"},
-	{12, "K"},
-	{13, "A"}
-    };
-    std::string tmp = val[card->getVal()];
-    switch(card->getKind()) {
-	case Diamonds:
-	    tmp += 'D';
-	    break;
-	case Hearts:
-	    tmp += 'H';
-	    break;
-	case Clubs:
-	    tmp += 'C';
-	    break;
-	case Spades:
-	    tmp += 'S';
-	    break;
-    }
-    this->cards[tmp] = card;
+    this->cards.push_back(card);
     this->rearrange();
     //this->cards[tmp]->setPosition(720.f / this->cardCount, this->pos.y);
     //std::printf("%d\n", this->cardCount);
@@ -53,8 +24,12 @@ Card* PlayerDeck::getPassedCard() {
     return this->passedCard;
 }
 
+unsigned short PlayerDeck::getKindAtIndex(int index) {
+    return index >= 0 && index < this->cards.size() ? this->cards[index]->getKind() : -1;
+}
+
 const bool PlayerDeck::passCard(unsigned int trgt, const double& dt) {
-    if(!this->cards.empty() && this->cards.find(this->selected) != this->cards.end()) {
+    if(!this->cards.empty() && this->selected >= 0 && this->selected < this->cards.size()) {
 	this->passedCard = this->cards[this->selected];
 	float dist = std::sqrt(
 	    std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
@@ -67,9 +42,9 @@ const bool PlayerDeck::passCard(unsigned int trgt, const double& dt) {
 	}
 	else {
 	    (*this->decks)[trgt]->addCard(this->cards[this->selected]);
-	    this->cards.erase(this->selected);
+	    this->cards.erase(this->cards.begin() + this->selected);
 	    --this->cardCount;
-	    this->selected = "";
+	    this->selected = -1;
 	    this->rearrange();
 	    return true;
 	}
@@ -78,51 +53,21 @@ const bool PlayerDeck::passCard(unsigned int trgt, const double& dt) {
 }
 
 void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
-    for(auto& it: this->cards) {
-	it.second->update(dt, mousePos);
-	if(this->selected == "" && it.second->isClicked()) {
-	    std::map<unsigned short, std::string> val {
-		{1, "2"},
-		{2, "3"},
-		{3, "4"},
-		{4, "5"},
-		{5, "6"},
-		{6, "7"},
-		{7, "8"},
-		{8, "9"},
-		{9, "10"},
-		{10, "J"},
-		{11, "Q"},
-		{12, "K"},
-		{13, "A"}
-	    };
-	    std::string tmp = val[it.second->getVal()];
-	    switch(it.second->getKind()) {
-		case Diamonds:
-		    tmp += 'D';
-		    break;
-		case Hearts:
-		    tmp += 'H';
-		    break;
-		case Clubs:
-		    tmp += 'C';
-		    break;
-		case Spades:
-		    tmp += 'S';
-		    break;
-	    }
-	    this->selected = tmp;
+    for(int i = 0, j = this->cards.size(); i < j; ++i) {
+	this->cards[i]->update(dt, mousePos);
+	if(this->selected == -1 && this->cards[i]->isClicked()) {
+	    this->selected = i;
 	}
     }
 }
 
 void PlayerDeck::reset() {
-    this->selected = "";
+    this->selected = -1;
 }
 
 const bool PlayerDeck::canMove(unsigned int kind) {
     for(auto& it: this->cards) {
-	if(it.second->getKind() == kind) return true;
+	if(it->getKind() == kind) return true;
     }
     return false;
 }
@@ -130,16 +75,16 @@ const bool PlayerDeck::canMove(unsigned int kind) {
 void PlayerDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {
-	it.second->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
+	it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 
 void PlayerDeck::render(sf::RenderTarget* target) {
     for(auto& it: this->cards) {
-	it.second->render(target);
+	it->render(target);
     }
 }
 
-std::string PlayerDeck::getSelected() {
+const int PlayerDeck::getSelected() {
     return this->selected;
 }
