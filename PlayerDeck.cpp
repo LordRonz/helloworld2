@@ -9,15 +9,14 @@ PlayerDeck::~PlayerDeck() {
     for(auto& it: this->cards) {
 	delete it;
     }
-    this->cards.clear();
 }
 
 void PlayerDeck::addCard(Card* card) {
-    ++this->cardCount;
-    this->cards.push_back(card);
-    this->rearrange();
-    //this->cards[tmp]->setPosition(720.f / this->cardCount, this->pos.y);
-    //std::printf("%d\n", this->cardCount);
+    if(card) {
+	++this->cardCount;
+	this->cards.push_back(card);
+	this->rearrange();
+    }
 }
 
 Card* PlayerDeck::getPassedCard() {
@@ -80,8 +79,10 @@ void PlayerDeck::rearrange() {
 }
 
 void PlayerDeck::render(sf::RenderTarget* target) {
-    for(auto& it: this->cards) {
-	it->render(target);
+    if(target) {
+	for(auto& it: this->cards) {
+	    it->render(target);
+	}
     }
 }
 

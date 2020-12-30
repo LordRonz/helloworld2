@@ -5,7 +5,7 @@ TrashDeck::TrashDeck(std::vector<Deck*>* decks) : Deck(decks)  {
 }
 
 TrashDeck::~TrashDeck() {
-    for(auto& it: cards) {
+    for(auto& it: this->cards) {
 	delete it;
     }
 }
@@ -31,7 +31,9 @@ void TrashDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void TrashDeck::render(sf::RenderTarget* target) {
-    for(auto& it: this->cards) {
-	it->render(target);
+    if(target) {
+	for(auto& it: this->cards) {
+	    it->render(target);
+	}
     }
 }

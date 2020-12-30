@@ -57,8 +57,10 @@ void Card::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void Card::render(sf::RenderTarget* target) {
-    if(this->sprite && this->buttSprite)
-	target->draw(this->butt ? *this->buttSprite : *this->sprite);
+    if(target) {
+	if(this->sprite && this->buttSprite)
+	    target->draw(this->butt ? *this->buttSprite : *this->sprite);
+    }
 }
 
 const sf::Vector2f Card::getPosition() {
@@ -66,7 +68,7 @@ const sf::Vector2f Card::getPosition() {
 }
 
 void Card::flip() {
-    butt = !butt;
+    butt ^= 1;
 }
 
 const bool Card::isClicked() {

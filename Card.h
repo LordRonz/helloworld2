@@ -34,16 +34,16 @@ protected:
 
 public:
     Card(const unsigned short& kind, const unsigned short& val, sf::Texture* texture, sf::Texture* buttText);
-    virtual ~Card();
+    ~Card();
 
     void createSprite(sf::Texture* texture, sf::Texture* buttText);
-    virtual void setPosition(const float& x, const float& y);
-    virtual void move(const double& dt, const float& dir_x, const float& dir_y);
-    virtual void update(const double& dt, const sf::Vector2f& mousePos);
-    virtual void render(sf::RenderTarget* target);
-    virtual const sf::Vector2f getPosition();
+    void setPosition(const float& x, const float& y);
+    void move(const double& dt, const float& dir_x, const float& dir_y);
+    void update(const double& dt, const sf::Vector2f& mousePos);
+    void render(sf::RenderTarget* target);
+    const sf::Vector2f getPosition();
     unsigned short getKind();
     unsigned short getVal();
-    virtual void flip();
+    void flip();
     const bool isClicked();
 };

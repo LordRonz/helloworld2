@@ -50,7 +50,7 @@ void GameState::initTextures() {
 	//printf("%c\n", c);
     }
     if(!this->textures["BUTT"].loadFromFile("res/txrs/cards/blue_back.png"))
-	printf("ERROR LOADING CARD TEXTURE\n");
+	std::printf("ERROR LOADING CARD TEXTURE\n");
 }
 
 //inisialisasi deck

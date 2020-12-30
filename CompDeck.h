@@ -10,7 +10,7 @@ private:
 
 public:
     CompDeck(std::vector<Deck*>* decks);
-    virtual ~CompDeck();
+    ~CompDeck();
     void addCard(Card* card);
     bool passCard(const unsigned int& trgt, const double& dt);
     void update(const double& dt, const sf::Vector2f& mousePos);

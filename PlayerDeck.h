@@ -10,7 +10,7 @@ private:
 
 public:
     PlayerDeck(std::vector<Deck*>* decks);
-    virtual ~PlayerDeck();
+    ~PlayerDeck();
     void addCard(Card* card);
     void update(const double& dt, const sf::Vector2f& mousePos);
     void render(sf::RenderTarget* target);
