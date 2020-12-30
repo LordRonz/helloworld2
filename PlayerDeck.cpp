@@ -13,7 +13,22 @@ PlayerDeck::~PlayerDeck() {
 
 void PlayerDeck::addCard(Card* card) {
     ++this->cardCount;
-    std::string tmp = std::to_string(card->getVal());
+    std::map<unsigned short, std::string> val {
+	{1, "2"},
+	{2, "3"},
+	{3, "4"},
+	{4, "5"},
+	{5, "6"},
+	{6, "7"},
+	{7, "8"},
+	{8, "9"},
+	{9, "10"},
+	{10, "J"},
+	{11, "Q"},
+	{12, "K"},
+	{13, "A"}
+    };
+    std::string tmp = val[card->getVal()];
     switch(card->getKind()) {
 	case Diamonds:
 	    tmp += 'D';
@@ -39,7 +54,7 @@ Card* PlayerDeck::getPassedCard() {
 }
 
 const bool PlayerDeck::passCard(unsigned int trgt, const double& dt) {
-    if(!this->cards.empty()) {
+    if(!this->cards.empty() && this->cards.find(this->selected) != this->cards.end()) {
 	this->passedCard = this->cards[this->selected];
 	float dist = std::sqrt(
 	    std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
@@ -66,7 +81,22 @@ void PlayerDeck::update(const double& dt, const sf::Vector2f mousePos) {
     for(auto& it: this->cards) {
 	it.second->update(dt, mousePos);
 	if(this->selected == "" && it.second->isClicked()) {
-	    std::string tmp = std::to_string(it.second->getVal());
+	    std::map<unsigned short, std::string> val {
+		{1, "2"},
+		{2, "3"},
+		{3, "4"},
+		{4, "5"},
+		{5, "6"},
+		{6, "7"},
+		{7, "8"},
+		{8, "9"},
+		{9, "10"},
+		{10, "J"},
+		{11, "Q"},
+		{12, "K"},
+		{13, "A"}
+	    };
+	    std::string tmp = val[it.second->getVal()];
 	    switch(it.second->getKind()) {
 		case Diamonds:
 		    tmp += 'D';

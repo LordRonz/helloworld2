@@ -4,7 +4,7 @@
 
 class PlayerDeck : public Deck{
 private:
-    std::map<std::string, Card*> cards;
+    std::unordered_map<std::string, Card*> cards;
     std::string selected;
     Card* passedCard{};
 

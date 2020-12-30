@@ -9,6 +9,7 @@ BaseDeck::~BaseDeck() {
 	delete this->cards.top();
 	this->cards.pop();
     }
+    delete this->dummy;
 }
 
 void BaseDeck::addCard(Card* card) {

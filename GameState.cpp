@@ -56,13 +56,13 @@ void GameState::initTextures() {
 //inisialisasi deck
 void GameState::initDecks() {
     this->decks.push_back(new BaseDeck(&this->decks));
-    std::map<int, std::string> knd {
+    std::map<unsigned short, std::string> knd {
 	{1, "D"},
 	{2, "H"},
 	{3, "C"},
 	{4, "S"}
     };
-    std::map<int, std::string> val {
+    std::map<unsigned short, std::string> val {
 	{1, "2"},
 	{2, "3"},
 	{3, "4"},
@@ -77,7 +77,7 @@ void GameState::initDecks() {
 	{12, "K"},
 	{13, "A"}
     };
-    this->decks[0]->addCard(new Card(0, 0, &this->textures["BUTT"], &this->textures["BUTT"]));
+    this->decks[0]->addCard(new Card(static_cast<unsigned short>(0), static_cast<unsigned short>(0), &this->textures["BUTT"], &this->textures["BUTT"]));
     std::vector<Card*> tmp;
     for(auto& it1: val) {
 	for(auto& it2 : knd) {
@@ -109,15 +109,15 @@ void GameState::updateDecks(const double& dt) {
     //First move
     bool tmp = this->begin;
     if(this->decks[Player0]->getCardCount() > 39) {
-	int tmp = this->decks[Player0]->getCardCount();
-	this->decks[Player0]->passCard(this->passDeck, dt);
-	if(tmp != this->decks[Player0]->getCardCount()) {
+	//int tmp = this->decks[Player0]->getCardCount();
+	//this->decks[Player0]->passCard(this->passDeck, dt);
+	//if(tmp != this->decks[Player0]->getCardCount()) {
+	if(this->decks[Player0]->passCard(this->passDeck, dt)) {
 	    ++this->passDeck;
 	    this->passDeck = this->passDeck == Trash ? 1 : this->passDeck;
 	}
     }
     else if(!this->begin) {
-	int tmp = this->decks[Player0]->getCardCount();
     	if(this->decks[Player0]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player0, this->decks[Player0]->getPassedCard()));
 	    this->begin = true;
@@ -171,7 +171,8 @@ void GameState::compareCards() {
 //update comp
 bool GameState::updateComp(const double& dt) {
     if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
-	this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
+	if(this->decks[Player2]->getSelected() == "")
+	    this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
     	if(this->decks[Player2]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player2, this->decks[Player2]->getPassedCard()));
 	    this->turn[Player2 - 1] = false;
