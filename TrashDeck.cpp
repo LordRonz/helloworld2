@@ -26,7 +26,7 @@ void TrashDeck::rearrange() {
     }
 }
 
-void TrashDeck::update(const double& dt, const sf::Vector2f mousePos) {
+void TrashDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 
 }
 

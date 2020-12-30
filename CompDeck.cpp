@@ -38,7 +38,7 @@ void CompDeck::artificialStupidity(Card* card) {
     this->selected = mxIndex;
 }
 
-const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
+bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(!this->cards.empty() && this->selected < this->cards.size()) {
 	this->passedCard = this->cards[this->selected];
 	float dist = std::sqrt(
@@ -62,11 +62,11 @@ const bool CompDeck::passCard(unsigned int trgt, const double& dt) {
     return false;
 }
 
-const int CompDeck::getSelected() {
+int CompDeck::getSelected() {
     return this->selected;
 }
 
-const bool CompDeck::canMove(unsigned int kind) {
+bool CompDeck::canMove(const unsigned int& kind) {
     for(auto& it: this->cards) {
 	if(it->getKind() == kind) return true;
     }
@@ -77,7 +77,7 @@ void CompDeck::reset() {
     this->selected = -1;
 }
 
-void CompDeck::update(const double& dt, const sf::Vector2f mousePos) {
+void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
     for(auto& it: this->cards) {
 	it->update(dt, mousePos);
     }

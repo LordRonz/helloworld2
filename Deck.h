@@ -14,17 +14,17 @@ protected:
 public:
     Deck(std::vector<Deck*>* decks);
     virtual ~Deck();
-    virtual void update(const double& dt, const sf::Vector2f mousePos);
+    virtual void update(const double& dt, const sf::Vector2f& mousePos);
     virtual void render(sf::RenderTarget* target);
     virtual void addCard(Card* card);
-    const sf::Vector2f getPosition();
-    virtual void setPosition(const float x, const float y);
-    virtual const bool passCard(unsigned int trgt, const double& dt);
+    sf::Vector2f getPosition();
+    virtual void setPosition(const float& x, const float& y);
+    virtual bool passCard(const unsigned int& trgt, const double& dt);
     virtual Card* getPassedCard();
     virtual void reset();
-    virtual const bool canMove(unsigned int kind);
-    virtual const int getSelected();
+    virtual bool canMove(const unsigned int& kind);
+    virtual int getSelected();
     virtual void artificialStupidity(Card* card);
     int getCardCount();
-    virtual unsigned short getKindAtIndex(int index);
+    virtual unsigned short getKindAtIndex(const int& index);
 };

@@ -1,6 +1,6 @@
 #include "Card.h"
 
-Card::Card(unsigned short kind, unsigned short val, sf::Texture* texture, sf::Texture* buttText) {
+Card::Card(const unsigned short& kind, const unsigned short& val, sf::Texture* texture, sf::Texture* buttText) {
     this->kind = kind;
     this->val = val;
     this->createSprite(texture, buttText);
@@ -24,12 +24,12 @@ void Card::createSprite(sf::Texture* texture, sf::Texture* buttText) {
     this->sprite->setColor(sf::Color(255, 255, 255, 230));
 }
 
-void Card::setPosition(const float x, const float y) {
+void Card::setPosition(const float& x, const float& y) {
    if(this->sprite)
 	this->sprite->setPosition(x, y);
 }
 
-void Card::move(const double& dt, const float dir_x, const float dir_y) {
+void Card::move(const double& dt, const float& dir_x, const float& dir_y) {
     //if(this->sprite)
     //	this->sprite->move(100 * dir_x * dt, 100 * dir_y * dt);
     sf::Vector2f dir = sf::Vector2f(dir_x - this->sprite->getPosition().x, dir_y - this->sprite->getPosition().y);
@@ -38,7 +38,7 @@ void Card::move(const double& dt, const float dir_x, const float dir_y) {
     this->buttSprite->move(dirNorm * movSpeed);
 }
 
-void Card::update(const double& dt, const sf::Vector2f mousePos) {
+void Card::update(const double& dt, const sf::Vector2f& mousePos) {
     if(this->sprite->getGlobalBounds().contains(mousePos)) {
 	if(!this->hover) {
 	    this->sprite->setColor(sf::Color(255, 255, 255, 255));

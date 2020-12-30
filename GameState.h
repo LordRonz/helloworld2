@@ -16,12 +16,12 @@ private:
     void updateDecks(const double& dt);
     bool isPassing{};
     bool passCannotMove{};
-    bool updatePlayer(const double& dt);
-    bool updateComp(const double& dt);
+    const bool updatePlayer(const double& dt);
+    const bool updateComp(const double& dt);
     std::vector<bool> turn;
     std::vector<std::pair<int, Card*>> cmpCards{};
-    const bool isValid(int selected);
-    bool firstMove{true};
+    const bool isValid(const int& selected);
+    const bool firstMove{true};
     void compareCards();
 
 public:

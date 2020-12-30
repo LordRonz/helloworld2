@@ -23,7 +23,7 @@ void BaseDeck::addCard(Card* card) {
     this->cards.top()->setPosition(this->pos.x, this->pos.y);
 }
 
-void BaseDeck::update(const double& dt, const sf::Vector2f mousePos) {
+void BaseDeck::update(const double& dt, const sf::Vector2f& mousePos) {
     if(!this->cards.empty()) {
     	this->cards.top()->update(dt, mousePos);
     } 
@@ -40,7 +40,7 @@ Card* BaseDeck::getPassedCard() {
     return this->passedCard;
 }
 
-const bool BaseDeck::passCard(unsigned int trgt, const double& dt) {
+bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(!this->cards.empty()) {
 	this->passedCard = this->cards.top();
 	float dist = std::sqrt(
