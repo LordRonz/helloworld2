@@ -1,0 +1,137 @@
+==8734== Memcheck, a memory error detector
+==8734== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8734== Using Valgrind-3.16.1 and LibVEX; rerun with -h for copyright info
+==8734== Command: ./hello
+==8734== Parent PID: 2041
+==8734== 
+==8734== Invalid read of size 8
+==8734==    at 0x401FB48: strncmp (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40073BD: is_dst (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40084D6: _dl_dst_count (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40086C5: expand_dynamic_string_token (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008827: fillin_rpath.isra.0 (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008B22: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==  Address 0x5a0ec89 is 9 bytes inside a block of size 15 alloc'd
+==8734==    at 0x483A77F: malloc (vg_replace_malloc.c:307)
+==8734==    by 0x401E68F: strdup (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008AB4: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==    by 0x55F734B: ??? (in /usr/lib/libdl-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734== 
+==8734== Invalid read of size 8
+==8734==    at 0x401FB48: strncmp (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40073BD: is_dst (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400858E: _dl_dst_substitute (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008827: fillin_rpath.isra.0 (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008B22: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==  Address 0x5a0ec89 is 9 bytes inside a block of size 15 alloc'd
+==8734==    at 0x483A77F: malloc (vg_replace_malloc.c:307)
+==8734==    by 0x401E68F: strdup (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008AB4: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==    by 0x55F734B: ??? (in /usr/lib/libdl-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734== 
+==8734== 
+==8734== HEAP SUMMARY:
+==8734==     in use at exit: 225,565 bytes in 2,368 blocks
+==8734==   total heap usage: 50,459 allocs, 48,091 frees, 65,322,000 bytes allocated
+==8734== 
+==8734== LEAK SUMMARY:
+==8734==    definitely lost: 0 bytes in 0 blocks
+==8734==    indirectly lost: 0 bytes in 0 blocks
+==8734==      possibly lost: 0 bytes in 0 blocks
+==8734==    still reachable: 223,865 bytes in 2,367 blocks
+==8734==         suppressed: 1,700 bytes in 1 blocks
+==8734== Reachable blocks (those to which a pointer was found) are not shown.
+==8734== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==8734== 
+==8734== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==8734== 
+==8734== 1 errors in context 1 of 2:
+==8734== Invalid read of size 8
+==8734==    at 0x401FB48: strncmp (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40073BD: is_dst (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400858E: _dl_dst_substitute (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008827: fillin_rpath.isra.0 (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008B22: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==  Address 0x5a0ec89 is 9 bytes inside a block of size 15 alloc'd
+==8734==    at 0x483A77F: malloc (vg_replace_malloc.c:307)
+==8734==    by 0x401E68F: strdup (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008AB4: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==    by 0x55F734B: ??? (in /usr/lib/libdl-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734== 
+==8734== 
+==8734== 1 errors in context 2 of 2:
+==8734== Invalid read of size 8
+==8734==    at 0x401FB48: strncmp (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40073BD: is_dst (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40084D6: _dl_dst_count (in /usr/lib/ld-2.32.so)
+==8734==    by 0x40086C5: expand_dynamic_string_token (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008827: fillin_rpath.isra.0 (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008B22: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==  Address 0x5a0ec89 is 9 bytes inside a block of size 15 alloc'd
+==8734==    at 0x483A77F: malloc (vg_replace_malloc.c:307)
+==8734==    by 0x401E68F: strdup (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4008AB4: decompose_rpath (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400A9BD: _dl_map_object (in /usr/lib/ld-2.32.so)
+==8734==    by 0x400F1E4: openaux (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x400F572: _dl_map_object_deps (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4015439: dl_open_worker (in /usr/lib/ld-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734==    by 0x4014F3D: _dl_open (in /usr/lib/ld-2.32.so)
+==8734==    by 0x55F734B: ??? (in /usr/lib/libdl-2.32.so)
+==8734==    by 0x4DA6087: _dl_catch_exception (in /usr/lib/libc-2.32.so)
+==8734== 
+--8734-- 
+--8734-- used_suppression:      1 dtv-addr-tail /usr/lib/valgrind/default.supp:1444 suppressed: 1,700 bytes in 1 blocks
+==8734== 
+==8734== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

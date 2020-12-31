@@ -97,7 +97,6 @@ void GameState::initDecks() {
 }
 //update
 void GameState::update(const double& dt) {
-    //std::printf("Hello GameState\n");
     this->updateMousePos();
     this->updateInput(dt);
     this->updateDecks(dt);
@@ -147,9 +146,16 @@ const bool GameState::isValid(const int& selected) {
 }
 
 void GameState::compareCards() {
-    if(this->firstMove) {
-	
+    int maxIndex = -1;
+    int maxVal = -1;
+    for(int i = this->firstMove ? 1 : 0, j = this->cmpCards.size(); i < j; ++i) {
+        int tmp;
+        if((tmp = this->cmpCards[i].second->getVal()) > maxVal) {
+	   maxVal = tmp;
+	   maxIndex = i;
+        }
     }
+
 }
 //update comp
 const bool GameState::updateComp(const double& dt) {
