@@ -24,11 +24,11 @@ Card* PlayerDeck::getPassedCard() {
 }
 
 unsigned short PlayerDeck::getKindAtIndex(const int& index) {
-    return index >= 0 && index < this->cards.size() ? this->cards[index]->getKind() : -1;
+    return index >= 0 && index < this->cards.size() && this->cards[index] ? this->cards[index]->getKind() : -1;
 }
 
 bool PlayerDeck::passCard(const unsigned int& trgt, const double& dt) {
-    if(!this->cards.empty() && this->selected >= 0 && this->selected < this->cards.size()) {
+    if(!this->cards.empty() && this->selected >= 0 && this->selected < this->cards.size() && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 	//float dist = std::sqrt(
 	    //std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
