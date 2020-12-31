@@ -43,13 +43,7 @@ void CompDeck::artificialStupidity(Card* card) {
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(!this->cards.empty() && this->selected < this->cards.size()) {
 	this->passedCard = this->cards[this->selected];
-	float dist = std::sqrt(
-	    std::pow((this->cards[this->selected]->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) +
-	    std::pow((this->cards[this->selected]->getPosition().y - (*this->decks)[trgt]->getPosition().y), 2));
-	//std::printf("%f\n", dist);
-	//system("cls");
-	//std::printf("%f\n", (*this->decks)[this->passDeck]->getPosition().x);
-	if(dist > 20.f) {
+	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    this->cards[this->selected]->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}
 	else {

@@ -13,5 +13,7 @@ public:
     void addCard(Card* card);
     void update(const double& dt, const sf::Vector2f& mousePos);
     void render(sf::RenderTarget* target);
+    bool passCard(const unsigned int& trgt, const double& dt);
+    bool throwDeck(const double& dt);
     void rearrange();
 };

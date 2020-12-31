@@ -63,7 +63,7 @@ void Card::render(sf::RenderTarget* target) {
     }
 }
 
-const sf::Vector2f Card::getPosition() {
+const sf::Vector2f& Card::getPosition() const {
     return this->sprite->getPosition();
 }
 
@@ -71,14 +71,14 @@ void Card::flip() {
     butt ^= 1;
 }
 
-const bool Card::isClicked() {
+const bool& Card::isClicked() const {
     return this->clicked;
 }
 
-unsigned short Card::getKind() {
+const unsigned short& Card::getKind() const {
     return this->kind;
 }
 
-unsigned short Card::getVal() {
+const unsigned short& Card::getVal() const {
     return this->val;
 }

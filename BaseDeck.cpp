@@ -46,13 +46,7 @@ Card* BaseDeck::getPassedCard() {
 bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(!this->cards.empty()) {
 	this->passedCard = this->cards.top();
-	float dist = std::sqrt(
-	    std::pow((this->cards.top()->getPosition().x - (*this->decks)[trgt]->getPosition().x), 2) + 
-	    std::pow((this->cards.top()->getPosition().y - (*this->decks)[trgt]->getPosition().y), 2));
-	//std::printf("%f\n", dist);
-	//system("cls");
-	//std::printf("%f\n", (*this->decks)[this->passDeck]->getPosition().x);
-	if(dist > 20.f) {
+	if(vectorDistance(this->cards.top()->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    this->cards.top()->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}
 	else {

@@ -17,7 +17,7 @@ public:
     virtual void update(const double& dt, const sf::Vector2f& mousePos);
     virtual void render(sf::RenderTarget* target);
     virtual void addCard(Card* card);
-    sf::Vector2f getPosition();
+    const sf::Vector2f& getPosition() const;
     virtual void setPosition(const float& x, const float& y);
     virtual bool passCard(const unsigned int& trgt, const double& dt);
     virtual Card* getPassedCard();
@@ -25,6 +25,6 @@ public:
     virtual bool canMove(const unsigned int& kind);
     virtual int getSelected();
     virtual void artificialStupidity(Card* card);
-    int getCardCount();
+    const unsigned short& getCardCount() const;
     virtual unsigned short getKindAtIndex(const int& index);
 };

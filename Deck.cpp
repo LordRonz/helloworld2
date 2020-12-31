@@ -38,7 +38,7 @@ bool Deck::passCard(const unsigned int& trgt, const double& dt) {
     return false;
 }
 
-sf::Vector2f Deck::getPosition() {
+const sf::Vector2f& Deck::getPosition() const {
     return this->pos;
 }
 
@@ -51,7 +51,7 @@ void Deck::setPosition(const float& x, const float& y) {
     this->pos.y = y;
 }
 
-int Deck::getCardCount() {
+const unsigned short& Deck::getCardCount() const {
     return this->cardCount;
 }
 

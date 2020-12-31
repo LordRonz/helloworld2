@@ -9,7 +9,7 @@ State::~State() {
 
 }
 
-const bool& State::getEnd() {
+const bool& State::getEnd() const {
     return this->end;
 }
 

@@ -2,6 +2,11 @@
 
 #include "stdafx.h"
 
+#include "SFML/System.hpp"
+#include "SFML/Window.hpp"
+#include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
+
 enum Suit { Diamonds = 1, Hearts, Clubs, Spades };
 
 class Card {
@@ -27,9 +32,9 @@ public:
     void move(const double& dt, const float& dir_x, const float& dir_y);
     void update(const double& dt, const sf::Vector2f& mousePos);
     void render(sf::RenderTarget* target);
-    const sf::Vector2f getPosition();
-    unsigned short getKind();
-    unsigned short getVal();
+    const sf::Vector2f& getPosition() const;
+    const unsigned short& getKind() const;
+    const unsigned short& getVal() const;
     void flip();
-    const bool isClicked();
+    const bool& isClicked() const;
 };

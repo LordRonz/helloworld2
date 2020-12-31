@@ -137,6 +137,7 @@ void GameState::updateDecks(const double& dt) {
     else if(this->turn[Player1 - 1]){
 	this->updatePlayer(dt);
     }
+    if(!this->turn[Player1 - 1]) this->decks[Trash]->passCard(69, dt);
 }
 
 const bool GameState::isValid(const int& selected) {
@@ -155,7 +156,8 @@ void GameState::compareCards() {
 	   maxIndex = i;
         }
     }
-
+    std::fill(this->turn.begin(), this->turn.end(), false);
+    this->turn[this->cmpCards[maxIndex].first - 1] = true;
 }
 //update comp
 const bool GameState::updateComp(const double& dt) {
