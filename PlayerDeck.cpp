@@ -50,6 +50,7 @@ bool PlayerDeck::passCard(const unsigned int& trgt, const double& dt) {
 
 void PlayerDeck::update(const double& dt, const sf::Vector2f& mousePos) {
     for(int i = 0, j = this->cards.size(); i < j; ++i) {
+	if(!this->cards[i]) continue;
 	this->cards[i]->update(dt, mousePos);
 	if(this->selected == -1 && this->cards[i]->isClicked()) {
 	    this->selected = i;
@@ -63,7 +64,7 @@ void PlayerDeck::reset() {
 
 bool PlayerDeck::canMove(const unsigned int& kind) {
     for(auto& it: this->cards) {
-	if(it->getKind() == kind) return true;
+	if(it && it->getKind() == kind) return true;
     }
     return false;
 }
@@ -71,14 +72,16 @@ bool PlayerDeck::canMove(const unsigned int& kind) {
 void PlayerDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {
-	it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
+	if(it)
+	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 
 void PlayerDeck::render(sf::RenderTarget* target) {
     if(target) {
 	for(auto& it: this->cards) {
-	    it->render(target);
+	    if(it)
+		it->render(target);
 	}
     }
 }

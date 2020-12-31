@@ -26,15 +26,18 @@ void BaseDeck::addCard(Card* card) {
 
 void BaseDeck::update(const double& dt, const sf::Vector2f& mousePos) {
     if(!this->cards.empty()) {
-    	this->cards.top()->update(dt, mousePos);
+	if(this->cards.top())
+	   this->cards.top()->update(dt, mousePos);
     } 
 }
 
 void BaseDeck::render(sf::RenderTarget* target) {
     if(target) {
 	if(!this->cards.empty()) {
-	    this->cards.top()->render(target);
-	    this->dummy->render(target);
+	    if(this->cards.top())
+		this->cards.top()->render(target);
+	    if(this->dummy)
+		this->dummy->render(target);
 	}
     }
 }
@@ -44,7 +47,7 @@ Card* BaseDeck::getPassedCard() {
 }
 
 bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
-    if(!this->cards.empty()) {
+    if(!this->cards.empty() && this->cards.top()) {
 	this->passedCard = this->cards.top();
 	if(vectorDistance(this->cards.top()->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    this->cards.top()->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);

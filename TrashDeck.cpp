@@ -48,7 +48,8 @@ bool TrashDeck::throwDeck(const double& dt) {
 void TrashDeck::rearrange() {
     int i = 1;
     for(auto& it: this->cards) {
-	it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
+	if(it)
+	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 
