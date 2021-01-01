@@ -11,13 +11,11 @@ TrashDeck::~TrashDeck() {
 }
 
 void TrashDeck::addCard(Card* card) {
-    if(card) {
-	this->addedCard = card;
-	++this->cardCount;
-	this->cards.push_back(card);
-	this->rearrange();
-    }
-    //std::printf("%d\n", this->cardCount);
+    if(!card) return;
+    this->addedCard = card;
+    ++this->cardCount;
+    this->cards.push_back(card);
+    this->rearrange();
 }
 
 bool TrashDeck::passCard(const unsigned int& trgt, const double& dt) {
@@ -58,10 +56,9 @@ void TrashDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void TrashDeck::render(sf::RenderTarget* target) {
-    if(target) {
-	for(auto& it: this->cards) {
-	    if(it)
-		it->render(target);
-	}
+    if(!target) return;
+    for(auto& it: this->cards) {
+        if(it)
+	   it->render(target);
     }
 }

@@ -21,6 +21,6 @@ class State {
 	virtual void checkEnd();
 	virtual void updateMousePos();
 	virtual void updateInput(const double& dt) = 0;
-	virtual void render(sf::RenderTarget* target = NULL) = 0;
+	virtual void render(sf::RenderTarget* target = nullptr) = 0;
 	virtual void update(const double& dt) = 0;
 };

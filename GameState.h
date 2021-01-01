@@ -2,6 +2,8 @@
 
 #include "State.h"
 
+#define PLAYER_COUNT 2
+
 class GameState : public State {
 private:
     std::vector<Deck*> decks;
@@ -18,7 +20,7 @@ private:
     bool passCannotMove{};
     const bool updatePlayer(const double& dt);
     const bool updateComp(const double& dt);
-    std::vector<bool> turn;
+    std::bitset<PLAYER_COUNT> turn;
     std::vector<std::pair<int, Card*>> cmpCards{};
     const bool isValid(const int& selected);
     const bool firstMove{true};
@@ -30,5 +32,5 @@ public:
     void endState();
     void updateInput(const double& dt);
     void update(const double& dt);
-    void render(sf::RenderTarget* target = NULL);
+    void render(sf::RenderTarget* target = nullptr);
 };

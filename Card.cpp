@@ -4,8 +4,6 @@ Card::Card(const unsigned short& kind, const unsigned short& val, sf::Texture* t
     this->kind = kind;
     this->val = val;
     this->createSprite(texture, buttText);
-    //this->sprite = new sf::Sprite;
-    //this->sprite->setTexture(*texture);
 }
 
 Card::~Card() {
@@ -15,13 +13,14 @@ Card::~Card() {
 
 void Card::createSprite(sf::Texture* texture, sf::Texture* buttText) {
     this->sprite = new sf::Sprite;
-    this->sprite->setTexture(*texture);
+    if(texture)
+	this->sprite->setTexture(*texture);
     this->sprite->setScale(.6f, .6f);
-    this->buttSprite = new sf::Sprite;
-    this->buttSprite->setTexture(*buttText);
-    this->buttSprite->setScale(.6f, .6f);
-    //this->sprite->setPosition(sf::Vector2f(10, 10));
     this->sprite->setColor(sf::Color(255, 255, 255, 230));
+    this->buttSprite = new sf::Sprite;
+    if(buttText)
+	this->buttSprite->setTexture(*buttText);
+    this->buttSprite->setScale(.6f, .6f);
 }
 
 void Card::setPosition(const float& x, const float& y) {
@@ -57,10 +56,9 @@ void Card::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void Card::render(sf::RenderTarget* target) {
-    if(target) {
-	if(this->sprite && this->buttSprite)
-	    target->draw(this->butt ? *this->buttSprite : *this->sprite);
-    }
+    if(!target) return;
+    if(this->sprite && this->buttSprite)
+        target->draw(this->butt ? *this->buttSprite : *this->sprite);
 }
 
 const sf::Vector2f& Card::getPosition() const {

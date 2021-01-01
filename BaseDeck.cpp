@@ -13,15 +13,14 @@ BaseDeck::~BaseDeck() {
 }
 
 void BaseDeck::addCard(Card* card) {
-    if(card) {
-	if(!this->cardCount++) {
-	    this->dummy = card;
-	    this->dummy->setPosition(this->pos.x, this->pos.y);
-	    return;
-	}
-	this->cards.push(card);
-	this->cards.top()->setPosition(this->pos.x, this->pos.y);
+    if(!card) return;
+    if(!this->cardCount++) {
+        this->dummy = card;
+        this->dummy->setPosition(this->pos.x, this->pos.y);
+        return;
     }
+    this->cards.push(card);
+    this->cards.top()->setPosition(this->pos.x, this->pos.y);
 }
 
 void BaseDeck::update(const double& dt, const sf::Vector2f& mousePos) {
@@ -32,13 +31,12 @@ void BaseDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void BaseDeck::render(sf::RenderTarget* target) {
-    if(target) {
-	if(!this->cards.empty()) {
-	    if(this->cards.top())
-		this->cards.top()->render(target);
-	    if(this->dummy)
-		this->dummy->render(target);
-	}
+    if(!target) return;
+    if(!this->cards.empty()) {
+        if(this->cards.top())
+	    this->cards.top()->render(target);
+        if(this->dummy)
+	   this->dummy->render(target);
     }
 }
 

@@ -12,10 +12,12 @@ GameState::~GameState() {
 	delete it;
     }
 }
+
 //insisialisasi variable
 void GameState::initVariables() {
-    this->turn = std::vector<bool> (this->decks.size() - 2);
+    //this->turn = std::vector<bool> (this->decks.size() - 2);
 }
+
 //inisialisasi background
 void GameState::initBackground() {
     this->bg.setSize(
@@ -27,30 +29,26 @@ void GameState::initBackground() {
     );
 
     if(!this->bgTexture.loadFromFile("res/txrs/bg/bg.png"))
-	std::printf("ERROR LOADING BG TEXTURE\n");
+	std::puts("ERROR LOADING BG TEXTURE");
     this->bg.setTexture(&this->bgTexture);
 }
 
 //inisialisasi texture
 void GameState::initTextures() {
-    //if(!this->textures["2C"].loadFromFile("res/txrs/cards/2C.png"))
-    //	printf("ERROR LOADING CARD TEXTURE\n");
     std::string path = "res/txrs/cards/";
     std::vector<std::string> crds{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     for(const std::string& c: crds) {
 	if(!this->textures[c + "C"].loadFromFile(path + c + "C.png"))
-	    std::printf("ERROR LOADING CARD TEXTURE\n");
+	    std::puts("ERROR LOADING CARD TEXTURE");
 	if(!this->textures[c + "H"].loadFromFile(path + c + "H.png"))
-	    std::printf("ERROR LOADING CARD TEXTURE\n");
+	    std::puts("ERROR LOADING CARD TEXTURE");
 	if(!this->textures[c + "D"].loadFromFile(path + c + "D.png"))
-	    std::printf("ERROR LOADING CARD TEXTURE\n");
+	    std::puts("ERROR LOADING CARD TEXTURE");
 	if(!this->textures[c + "S"].loadFromFile(path + c + "S.png"))
-	    std::printf("ERROR LOADING CARD TEXTURE\n");
-
-	//printf("%c\n", c);
+	    std::puts("ERROR LOADING CARD TEXTURE");
     }
     if(!this->textures["BUTT"].loadFromFile("res/txrs/cards/blue_back.png"))
-	std::printf("ERROR LOADING CARD TEXTURE\n");
+	std::puts("ERROR LOADING CARD TEXTURE");
 }
 
 //inisialisasi deck
@@ -82,35 +80,29 @@ void GameState::initDecks() {
     for(auto& it1: val) {
 	for(auto& it2 : knd) {
 	    tmp.push_back(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
-	    //this->decks[0]->addCard(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
 	}
     }
     std::shuffle(tmp.begin(), tmp.end(), std::default_random_engine(std::random_device{}()));
     for(auto& crd: tmp) {
 	this->decks[Player0]->addCard(crd);
     }
-    //this->decks[0]->addCard(new Card(3, 2, &this->textures["2C"], &this->textures["BUTT"]));
     this->decks.push_back(new PlayerDeck(&this->decks));
     this->decks.push_back(new CompDeck(&this->decks));
     this->decks.push_back(new TrashDeck(&this->decks));
-    //this->decks[1]->addCard(new Card(3, 3, &this->textures["3C"]));
 }
+
 //update
 void GameState::update(const double& dt) {
     this->updateMousePos();
     this->updateInput(dt);
     this->updateDecks(dt);
-    //if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	//std::printf("A\n");
 }
+
 //update tiap deck
 void GameState::updateDecks(const double& dt) {
     //First move
     bool tmp = this->begin;
     if(this->decks[Player0]->getCardCount() > 39) {
-	//int tmp = this->decks[Player0]->getCardCount();
-	//this->decks[Player0]->passCard(this->passDeck, dt);
-	//if(tmp != this->decks[Player0]->getCardCount()) {
 	if(this->decks[Player0]->passCard(this->passDeck, dt)) {
 	    ++this->passDeck;
 	    this->passDeck = this->passDeck == Trash ? 1 : this->passDeck;
@@ -122,22 +114,26 @@ void GameState::updateDecks(const double& dt) {
 	    this->begin = true;
 	}
     }
+
     if(this->begin) {
 	for(auto& it: this->decks) {
 	    it->update(dt, this->mousePosView);
 	}
 	if(!tmp) {
-	    std::fill(this->turn.begin(), this->turn.end(), true);
+	    this->turn.set();
+	    //std::fill(this->turn.begin(), this->turn.end(), true);
 	}
     }
     else return;
+
     if(this->turn[Player2 - 1]) {
 	this->updateComp(dt);
     }
     else if(this->turn[Player1 - 1]){
 	this->updatePlayer(dt);
     }
-    if(!this->turn[Player1 - 1]) this->decks[Trash]->passCard(69, dt);
+
+    if(this->turn.none()) this->decks[Trash]->passCard(69, dt);
 }
 
 const bool GameState::isValid(const int& selected) {
@@ -149,16 +145,18 @@ const bool GameState::isValid(const int& selected) {
 void GameState::compareCards() {
     int maxIndex = -1;
     int maxVal = -1;
-    for(int i = this->firstMove ? 1 : 0, j = this->cmpCards.size(); i < j; ++i) {
+    for(unsigned i = this->firstMove ? 1 : 0, j = this->cmpCards.size(); i < j; ++i) {
         int tmp;
         if((tmp = this->cmpCards[i].second->getVal()) > maxVal) {
 	   maxVal = tmp;
 	   maxIndex = i;
         }
     }
-    std::fill(this->turn.begin(), this->turn.end(), false);
+    //std::fill(this->turn.begin(), this->turn.end(), false);
+    this->turn.reset();
     this->turn[this->cmpCards[maxIndex].first - 1] = true;
 }
+
 //update comp
 const bool GameState::updateComp(const double& dt) {
     if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
@@ -180,6 +178,7 @@ const bool GameState::updateComp(const double& dt) {
     }
     return false; 
 }
+
 //update player
 const bool GameState::updatePlayer(const double& dt) {
     if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
@@ -205,10 +204,10 @@ const bool GameState::updatePlayer(const double& dt) {
 
 void GameState::render(sf::RenderTarget* target) {
     if(!target) target = this->window;
-    //this->deck->render(target);
     target->draw(this->bg);
     for(auto& it: this->decks) {
-	it->render(target);
+	if(it)
+	    it->render(target);
     }
 }
 

@@ -12,11 +12,10 @@ CompDeck::~CompDeck() {
 }
 
 void CompDeck::addCard(Card* card) {
-    if(card) {
-	++this->cardCount;
-	this->cards.push_back(card);
-	this->cards.back()->setPosition(this->pos.x, this->pos.y);
-    }
+    if(!card) return;
+    ++this->cardCount;
+    this->cards.push_back(card);
+    this->cards.back()->setPosition(this->pos.x, this->pos.y);
 }
 
 Card* CompDeck::getPassedCard() {
@@ -24,21 +23,19 @@ Card* CompDeck::getPassedCard() {
 }
 
 void CompDeck::artificialStupidity(Card* card) {
-    if(card) {
-	int mxIndex = 0;
-	int mx = 0;
-	for(int i = 0, j = this->cards.size(); i < j; ++i) {
-	    if(!this->cards[i]) continue;
-	    if(this->cards[i]->getKind() == card->getKind()) {
-		int tmp;
-		if((tmp = this->cards[i]->getVal()) > mx) {
-		    mx = tmp;
-		    mxIndex = i;
-		}
+    if(!card) return;
+    int mxIndex = 0, mx = 0;
+    for(unsigned i = 0, j = this->cards.size(); i < j; ++i) {
+	if(!this->cards[i]) continue;
+	if(this->cards[i]->getKind() == card->getKind()) {
+	    int tmp;
+	    if((tmp = this->cards[i]->getVal()) > mx) {
+	        mx = tmp;
+	        mxIndex = i;
 	    }
-	}
-	this->selected = mxIndex;
+        }
     }
+    this->selected = mxIndex;
 }
 
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
@@ -82,11 +79,9 @@ void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 }
 
 void CompDeck::render(sf::RenderTarget* target) {
-    if(target) {
-	if(!this->cards.empty() && this->cards.front())
-	    this->cards.front()->render(target);
-	if(this->selected != -1 && this->cards[this->selected]) {
-	    this->cards[this->selected]->render(target);
-	}
-    }
+    if(!target) return;
+    if(!this->cards.empty() && this->cards.front())
+        this->cards.front()->render(target);
+    if(this->selected != -1 && this->cards[this->selected])
+        this->cards[this->selected]->render(target);
 }
