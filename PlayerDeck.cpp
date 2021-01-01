@@ -59,6 +59,7 @@ void PlayerDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 
 void PlayerDeck::reset() {
     this->selected = -1;
+    this->passedCard = nullptr;
 }
 
 bool PlayerDeck::canMove(const unsigned int& kind) {

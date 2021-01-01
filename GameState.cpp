@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : State(window, states){
+    this->initRenderTexture();
     this->initBackground();
     this->initTextures();
     this->initDecks();
@@ -11,6 +12,11 @@ GameState::~GameState() {
     for(auto& it: this->decks) {
 	delete it;
     }
+}
+
+void GameState::initRenderTexture() {
+    this->renderTexture.create(1280.f, 720.f);
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
 }
 
 //insisialisasi variable
@@ -121,7 +127,6 @@ void GameState::updateDecks(const double& dt) {
 	}
 	if(!tmp) {
 	    this->turn.set();
-	    //std::fill(this->turn.begin(), this->turn.end(), true);
 	}
     }
     else return;
@@ -133,7 +138,17 @@ void GameState::updateDecks(const double& dt) {
 	this->updatePlayer(dt);
     }
 
-    if(this->turn.none()) this->decks[Trash]->passCard(69, dt);
+    if(this->turn.none()) {
+	if(this->winner == -1)
+	    this->compareCards();
+	if(this->decks[Trash]->passCard(69, dt)) {
+	    this->cmpCards.clear();
+	    this->turn.reset();
+	    this->turn[winner] = true;
+	    this->winner = -1;
+	    if(this->firstMove) this->firstMove = false;
+	}
+    }
 }
 
 const bool GameState::isValid(const int& selected) {
@@ -143,23 +158,40 @@ const bool GameState::isValid(const int& selected) {
 }
 
 void GameState::compareCards() {
-    int maxIndex = -1;
+    if(this->firstMove && this->cmpCards.size() == 1) {
+	this->winner = Player2 - 1;
+	return;
+    }
+    unsigned maxIndex = 0;
     int maxVal = -1;
     for(unsigned i = this->firstMove ? 1 : 0, j = this->cmpCards.size(); i < j; ++i) {
+	if(!this->cmpCards[i].second) continue;
         int tmp;
         if((tmp = this->cmpCards[i].second->getVal()) > maxVal) {
 	   maxVal = tmp;
 	   maxIndex = i;
         }
     }
-    //std::fill(this->turn.begin(), this->turn.end(), false);
-    this->turn.reset();
-    this->turn[this->cmpCards[maxIndex].first - 1] = true;
+    this->winner = this->cmpCards[maxIndex].first - 1;
 }
 
 //update comp
 const bool GameState::updateComp(const double& dt) {
-    if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
+    //kondisi jika player ini yang mulai duluan
+    if(this->turn[Player2 - 1] && this->cmpCards.empty()) {
+	if(this->decks[Player2]->getSelected() == -1) {
+	    this->decks[Player2]->artificialStupidity(nullptr);
+	}
+	if(this->decks[Player2]->passCard(Trash, dt)) {
+	    this->cmpCards.push_back(std::make_pair(Player2, this->decks[Player2]->getPassedCard()));
+	    this->turn[Player2 - 1] = false;
+	    this->turn[Player1 - 1] = true;
+	    this->decks[Player2]->reset();
+	}
+    }
+
+    //kondisi jika player ini tidak mulai duluan
+    else if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player2]->getSelected() == -1)
 	    this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
     	if(this->decks[Player2]->passCard(Trash, dt)) {
@@ -168,9 +200,11 @@ const bool GameState::updateComp(const double& dt) {
 	    this->decks[Player2]->reset();
 	}
     }
-    else if(!this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
+
+    else if(!this->cmpCards.empty() && !this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player2, dt)) {
 	    this->turn[Player2 - 1] = false;
+	    this->decks[Player2]->reset();
 	}
     }
     else {
@@ -181,7 +215,16 @@ const bool GameState::updateComp(const double& dt) {
 
 //update player
 const bool GameState::updatePlayer(const double& dt) {
-    if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
+    if(this->turn[Player1 - 1] && this->cmpCards.empty()) {
+	if(this->decks[Player1]->passCard(Trash, dt)) {
+	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));
+	    this->turn[Player1 - 1] = false;
+	    this->turn[Player2 - 1] = true;
+	    this->decks[Player1]->reset();
+	}
+    }
+
+    else if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
 	if(this->decks[Player1]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));
 	    this->turn[Player1 - 1] = false;
@@ -189,9 +232,10 @@ const bool GameState::updatePlayer(const double& dt) {
 	}
     }
 
-    else if(!this->decks[Player1]->canMove(this->cmpCards.front().second->getKind())) {
+    else if(!this->cmpCards.empty() && !this->decks[Player1]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player1, dt)) {
 	    this->turn[Player1 - 1] = false;
+	    this->decks[Player1]->reset();
 	}
 	else {
 	}
@@ -204,11 +248,14 @@ const bool GameState::updatePlayer(const double& dt) {
 
 void GameState::render(sf::RenderTarget* target) {
     if(!target) target = this->window;
-    target->draw(this->bg);
+    this->renderTexture.clear();
+    this->renderTexture.draw(this->bg);
     for(auto& it: this->decks) {
 	if(it)
-	    it->render(target);
+	    it->render(&this->renderTexture);
     }
+    this->renderTexture.display();
+    target->draw(this->renderSprite);
 }
 
 void GameState::updateInput(const double& dt) {
@@ -219,5 +266,5 @@ void GameState::updateInput(const double& dt) {
 }
 
 void GameState::endState() {
-    std::printf("Ending state\n");
+
 }

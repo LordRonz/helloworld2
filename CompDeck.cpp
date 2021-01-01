@@ -23,19 +23,28 @@ Card* CompDeck::getPassedCard() {
 }
 
 void CompDeck::artificialStupidity(Card* card) {
-    if(!card) return;
-    int mxIndex = 0, mx = 0;
+    if(this->cards.empty()) return;
+    if(!card) {
+	std::default_random_engine rng(std::random_device{}());
+	std::uniform_int_distribution<int> res(0, this->cards.size() - 1);
+	this->selected = res(rng);
+	return;
+    }
+    int mnIndex = 0, mn = 15, tmpmin = 0;
     for(unsigned i = 0, j = this->cards.size(); i < j; ++i) {
 	if(!this->cards[i]) continue;
 	if(this->cards[i]->getKind() == card->getKind()) {
 	    int tmp;
-	    if((tmp = this->cards[i]->getVal()) > mx) {
-	        mx = tmp;
-	        mxIndex = i;
+	    if((tmp = this->cards[i]->getVal()) > tmpmin) {
+		tmpmin = tmp;
+	        if(tmpmin < mn) {
+		    mn = tmpmin;
+		    mnIndex = i;
+		}
 	    }
         }
     }
-    this->selected = mxIndex;
+    this->selected = mnIndex;
 }
 
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
@@ -69,6 +78,7 @@ bool CompDeck::canMove(const unsigned int& kind) {
 
 void CompDeck::reset() {
     this->selected = -1;
+    this->passedCard = nullptr;
 }
 
 void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
@@ -80,8 +90,10 @@ void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 
 void CompDeck::render(sf::RenderTarget* target) {
     if(!target) return;
-    if(!this->cards.empty() && this->cards.front())
-        this->cards.front()->render(target);
+    unsigned i = 0;
+    while(this->selected == i) ++i;
+    if(!this->cards.empty() && this->cards[i])
+        this->cards[i]->render(target);
     if(this->selected != -1 && this->cards[this->selected])
         this->cards[this->selected]->render(target);
 }
