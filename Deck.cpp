@@ -15,13 +15,11 @@ void Deck::addCard(Card* card) {
 }
 
 void Deck::update(const double& dt, const sf::Vector2f& mousePos) {
-    //for(auto& it: this->cards) {
-    //	it.second->update(dt, mousePos);
-    //}
+ 
 }
 
 void Deck::render(sf::RenderTarget* target) {
-     //this->cards["2C"]->render(target);
+
 }
 
 void Deck::reset() {}

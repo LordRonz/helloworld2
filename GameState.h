@@ -11,18 +11,20 @@ private:
     std::vector<Deck*> decks;
     sf::Texture bgTexture;
     sf::RectangleShape bg;
-
+    sf::Font font;
+    EndGame* endGame;
+    bool someoneWon{};
     void initRenderTexture();
-    void initVariables();
     void initBackground();
     void initTextures();
     void initDecks();
+    void initFonts();
+    void initEndGame();
     int passDeck{Player1};
     int winner{-1};
     bool begin{};
     void updateDecks(const double& dt);
-    bool isComparing{};
-    bool passCannotMove{};
+    void updateEndGame(const double& dt);
     const bool updatePlayer(const double& dt);
     const bool updateComp(const double& dt);
     std::bitset<PLAYER_COUNT> turn;

@@ -5,10 +5,12 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
     this->initBackground();
     this->initTextures();
     this->initDecks();
-    this->initVariables();
+    this->initFonts();
+    this->initEndGame();
 }
 
 GameState::~GameState() {
+    delete this->endGame;
     for(auto& it: this->decks) {
 	delete it;
     }
@@ -19,9 +21,13 @@ void GameState::initRenderTexture() {
     this->renderSprite.setTexture(this->renderTexture.getTexture());
 }
 
-//insisialisasi variable
-void GameState::initVariables() {
+void GameState::initFonts() {
+    if(!this->font.loadFromFile("res/fonts/lhf_american_sans.ttf"))
+	std::puts("ERROR LOADING FONT");
+}
 
+void GameState::initEndGame() {
+    this->endGame = new EndGame(&this->font);
 }
 
 //inisialisasi background
@@ -101,7 +107,10 @@ void GameState::initDecks() {
 void GameState::update(const double& dt) {
     this->updateMousePos();
     this->updateInput(dt);
-    this->updateDecks(dt);
+    if(!this->someoneWon)
+	this->updateDecks(dt);
+    else
+	this->updateEndGame(dt);
 }
 
 //update tiap deck
@@ -130,6 +139,15 @@ void GameState::updateDecks(const double& dt) {
 	}
     }
     else return;
+    
+    //cek apakah salah satu deck pemain kosong
+    for(unsigned i = 1, j = this->decks.size() - 1; i < j; ++i) {
+	if(this->decks[i]->getCardCount() == 0) {
+	    this->someoneWon = true;
+	    if(i == 1) this->endGame->setText("YOU WON");
+	    else this->endGame->setText("YOU LOSE");
+	}
+    }
 
     if(this->turn[Player2 - 1]) {
 	this->updateComp(dt);
@@ -149,6 +167,10 @@ void GameState::updateDecks(const double& dt) {
 	    if(this->firstMove) this->firstMove = false;
 	}
     }
+}
+
+void GameState::updateEndGame(const double& dt) {
+    this->endGame->update(this->mousePosView);
 }
 
 const bool GameState::isValid(const int& selected) {
@@ -237,8 +259,6 @@ const bool GameState::updatePlayer(const double& dt) {
 	    this->turn[Player1 - 1] = false;
 	    this->decks[Player1]->reset();
 	}
-	else {
-	}
     }
     else {
 	this->decks[Player1]->reset();
@@ -254,6 +274,7 @@ void GameState::render(sf::RenderTarget* target) {
 	if(it)
 	    it->render(&this->renderTexture);
     }
+    if(this->someoneWon) this->endGame->render(&this->renderTexture);
     this->renderTexture.display();
     target->draw(this->renderSprite);
 }

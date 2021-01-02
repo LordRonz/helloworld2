@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseDeck.h"
+#include "EndGame.h"
 class State {
     protected:
 	std::stack<State*>* states{};
@@ -11,7 +11,6 @@ class State {
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
-	virtual void initVariables() = 0;
 
     public:
 	State(sf::RenderWindow* window, std::stack<State*>* states);
