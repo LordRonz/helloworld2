@@ -16,7 +16,7 @@ Button::Button(float x, float y, float width, float height, sf::Font* font, std:
     this->idleColor = idleColor;
     this->hoverColor = hoverColor;
     this->activeColor = activeColor;
-    this->shape.setFillColor(this->color);
+    this->shape.setFillColor(idleColor);
 }
 
 Button::~Button() {}
