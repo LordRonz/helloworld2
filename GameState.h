@@ -34,7 +34,6 @@ private:
 public:
     GameState(sf::RenderWindow* window, std::stack<State*>* states);
     ~GameState();
-    void endState();
     void updateInput(const double& dt);
     void update(const double& dt);
     void render(sf::RenderTarget* target = nullptr);

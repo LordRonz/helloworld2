@@ -13,10 +13,8 @@ const bool& State::getEnd() const {
     return this->end;
 }
 
-void State::checkEnd() {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-	this->end = true;
-    }
+void State::endState() {
+    this->end = true;
 }
 
 void State::updateMousePos() {

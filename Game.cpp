@@ -18,6 +18,10 @@ Game::~Game() {
     }
 }
 
+void Game::endApplication() {
+    std::puts("Ending Application!");
+}
+
 void Game::updateDt() {
     this->dt = this->dtClock.restart().asSeconds();
 }
@@ -43,11 +47,13 @@ void Game::update() {
     this->updateEvents();
 
     if(!this->states.empty()) {
-	this->states.top()->update(this->dt);
-	if(this->states.top()->getEnd()) {
-	    this->states.top()->endState();
-	    delete this->states.top();
-	    this->states.pop();
+	if(this->window->hasFocus()) {
+	    this->states.top()->update(this->dt);
+	    if(this->states.top()->getEnd()) {
+		this->states.top()->endState();
+		delete this->states.top();
+		this->states.pop();
+	    }
 	}
     }
 

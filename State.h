@@ -17,8 +17,7 @@ class State {
 	State(sf::RenderWindow* window, std::stack<State*>* states);
 	virtual ~State();
 	const bool& getEnd() const;
-	virtual void endState() = 0;
-	virtual void checkEnd();
+	void endState();
 	virtual void updateMousePos();
 	virtual void updateInput(const double& dt) = 0;
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;

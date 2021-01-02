@@ -19,6 +19,7 @@ class Game {
 	~Game();
 	void updateDt();
 	void updateEvents();
+	void endApplication();
 	void run();
 	void update();
 	void render();

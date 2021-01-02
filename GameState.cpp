@@ -21,7 +21,7 @@ void GameState::initRenderTexture() {
 
 //insisialisasi variable
 void GameState::initVariables() {
-    //this->turn = std::vector<bool> (this->decks.size() - 2);
+
 }
 
 //inisialisasi background
@@ -265,6 +265,3 @@ void GameState::updateInput(const double& dt) {
 	//this->player->move(dt, 0.f, 1.f);
 }
 
-void GameState::endState() {
-
-}

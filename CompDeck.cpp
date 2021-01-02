@@ -94,6 +94,6 @@ void CompDeck::render(sf::RenderTarget* target) {
     while(this->selected == i) ++i;
     if(!this->cards.empty() && this->cards[i])
         this->cards[i]->render(target);
-    if(this->selected != -1 && this->cards[this->selected])
+    if(!this->cards.empty() && this->selected != -1 && this->cards[this->selected])
         this->cards[this->selected]->render(target);
 }
