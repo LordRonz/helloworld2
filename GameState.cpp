@@ -144,8 +144,9 @@ void GameState::updateDecks(const double& dt) {
     for(unsigned i = 1, j = this->decks.size() - 1; i < j; ++i) {
 	if(this->decks[i]->getCardCount() == 0) {
 	    this->someoneWon = true;
-	    if(i == 1) this->endGame->setText("YOU WON");
+	    if(i == Player1) this->endGame->setText("YOU WIN");
 	    else this->endGame->setText("YOU LOSE");
+	    return;
 	}
     }
 

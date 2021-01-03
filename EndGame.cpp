@@ -3,6 +3,7 @@
 EndGame::EndGame(sf::Font* font) {
     this->font = font;
     this->initButtons();
+    this->initBackground();
     this->text.setFont(*this->font);
     this->text.setFillColor(sf::Color::Green);
     this->text.setCharacterSize(30);
@@ -21,6 +22,11 @@ void EndGame::initButtons() {
 				sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)));
 }
 
+void EndGame::initBackground() {
+    this->shape.setSize(sf::Vector2f(1280.f, 720.f));
+    this->shape.setFillColor(sf::Color(30, 30, 30, 100));
+}
+
 void EndGame::setText(const std::string& text) {
     this->text.setString(text);
 }
@@ -33,6 +39,7 @@ void EndGame::update(const sf::Vector2f& mousePos) {
 
 void EndGame::render(sf::RenderTarget* target) {
     if(!target) return;
+    target->draw(this->shape);
     target->draw(this->text);
     for(auto& it: this->buttons) {
 	it->render(target);

@@ -66,7 +66,7 @@ const sf::Vector2f& Card::getPosition() const {
 }
 
 void Card::flip() {
-    butt ^= 1;
+    this->butt ^= 1;
 }
 
 const bool& Card::isClicked() const {

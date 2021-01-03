@@ -9,6 +9,7 @@ private:
     sf::Text text;
     std::vector<Button*> buttons;
     void initButtons();
+    void initBackground();
 
 public:
     EndGame(sf::Font* font);
