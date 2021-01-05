@@ -25,11 +25,11 @@ private:
     bool begin{};
     void updateDecks(const double& dt);
     void updateEndGame(const double& dt);
-    const bool updatePlayer(const double& dt);
-    const bool updateComp(const double& dt);
+    bool updatePlayer(const double& dt);
+    bool updateComp(const double& dt);
     std::bitset<PLAYER_COUNT> turn;
     std::vector<std::pair<int, Card*>> cmpCards{};
-    const bool isValid(const int& selected);
+    const bool isValid(const int& selected) const;
     bool firstMove{true};
     void compareCards();
 

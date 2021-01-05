@@ -174,7 +174,7 @@ void GameState::updateEndGame(const double& dt) {
     this->endGame->update(this->mousePosView);
 }
 
-const bool GameState::isValid(const int& selected) {
+const bool GameState::isValid(const int& selected) const{
     if(this->begin && !this->cmpCards.empty())
 	return this->cmpCards.front().second->getKind() == this->decks[Player1]->getKindAtIndex(selected);
     return false;
@@ -199,7 +199,7 @@ void GameState::compareCards() {
 }
 
 //update comp
-const bool GameState::updateComp(const double& dt) {
+bool GameState::updateComp(const double& dt) {
     //kondisi jika player ini yang mulai duluan
     if(this->turn[Player2 - 1] && this->cmpCards.empty()) {
 	if(this->decks[Player2]->getSelected() == -1) {
@@ -237,7 +237,7 @@ const bool GameState::updateComp(const double& dt) {
 }
 
 //update player
-const bool GameState::updatePlayer(const double& dt) {
+bool GameState::updatePlayer(const double& dt) {
     if(this->turn[Player1 - 1] && this->cmpCards.empty()) {
 	if(this->decks[Player1]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));

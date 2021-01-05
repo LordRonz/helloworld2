@@ -31,6 +31,7 @@ void Game::updateEvents() {
 	switch(this->event.type) {
 	    case sf::Event::Closed:
 		this->window->close();
+		break;
 	}
     }
 }

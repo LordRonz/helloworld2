@@ -30,21 +30,28 @@ void CompDeck::artificialStupidity(Card* card) {
 	this->selected = res(rng);
 	return;
     }
-    int mnIndex = 0, mn = 15, tmpmin = 0;
+    unsigned mnIndexFound(0), mnFound(15), mnIndexNotFound(0), mnNotFound(15);
+    bool found{};
     for(unsigned i = 0, j = this->cards.size(); i < j; ++i) {
 	if(!this->cards[i]) continue;
 	if(this->cards[i]->getKind() == card->getKind()) {
-	    int tmp;
-	    if((tmp = this->cards[i]->getVal()) > tmpmin) {
-		tmpmin = tmp;
-	        if(tmpmin < mn) {
-		    mn = tmpmin;
-		    mnIndex = i;
+	    unsigned tmp(0);
+	    if((tmp = this->cards[i]->getVal()) > card->getVal()) {
+	        if(tmp < mnFound) {
+		    mnFound = tmp;
+		    mnIndexFound = i;
+		    found = true;
+		}
+	    }
+	    else {
+		if(tmp < mnNotFound) {
+		    mnNotFound = tmp;
+		    mnIndexNotFound = i;
 		}
 	    }
         }
     }
-    this->selected = mnIndex;
+    this->selected = found ? mnIndexFound : mnIndexNotFound;
 }
 
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
