@@ -90,14 +90,12 @@ void GameState::initDecks() {
     this->decks[0]->addCard(new Card(static_cast<unsigned short>(0), static_cast<unsigned short>(0), &this->textures["BUTT"], &this->textures["BUTT"]));
     std::vector<Card*> tmp;
     for(auto& it1: val) {
-	for(auto& it2 : knd) {
+	for(auto& it2 : knd)
 	    tmp.push_back(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
-	}
     }
     std::shuffle(tmp.begin(), tmp.end(), std::default_random_engine(std::random_device{}()));
-    for(auto& crd: tmp) {
+    for(auto& crd: tmp)
 	this->decks[Player0]->addCard(crd);
-    }
     this->decks.push_back(new PlayerDeck(&this->decks));
     this->decks.push_back(new CompDeck(&this->decks));
     this->decks.push_back(new TrashDeck(&this->decks));
@@ -131,12 +129,10 @@ void GameState::updateDecks(const double& dt) {
     }
 
     if(this->begin) {
-	for(auto& it: this->decks) {
+	for(auto& it: this->decks)
 	    it->update(dt, this->mousePosView);
-	}
-	if(!tmp) {
+	if(!tmp)
 	    this->turn.set();
-	}
     }
     else return;
     
@@ -150,12 +146,11 @@ void GameState::updateDecks(const double& dt) {
 	}
     }
 
-    if(this->turn[Player2 - 1]) {
+    if(this->turn[Player2 - 1])
 	this->updateComp(dt);
-    }
-    else if(this->turn[Player1 - 1]){
+
+    else if(this->turn[Player1 - 1])
 	this->updatePlayer(dt);
-    }
 
     if(this->turn.none()) {
 	if(this->winner == -1)
@@ -202,9 +197,9 @@ void GameState::compareCards() {
 bool GameState::updateComp(const double& dt) {
     //kondisi jika player ini yang mulai duluan
     if(this->turn[Player2 - 1] && this->cmpCards.empty()) {
-	if(this->decks[Player2]->getSelected() == -1) {
+	if(this->decks[Player2]->getSelected() == -1)
 	    this->decks[Player2]->artificialStupidity(nullptr);
-	}
+
 	if(this->decks[Player2]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player2, this->decks[Player2]->getPassedCard()));
 	    this->turn[Player2 - 1] = false;
@@ -230,9 +225,8 @@ bool GameState::updateComp(const double& dt) {
 	    this->decks[Player2]->reset();
 	}
     }
-    else {
+    else
 	this->decks[Player2]->reset();
-    }
     return false; 
 }
 
@@ -261,9 +255,8 @@ bool GameState::updatePlayer(const double& dt) {
 	    this->decks[Player1]->reset();
 	}
     }
-    else {
+    else
 	this->decks[Player1]->reset();
-    }
     return false;
 }
 

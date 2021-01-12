@@ -49,6 +49,10 @@ void Deck::setPosition(const float& x, const float& y) {
     this->pos.y = y;
 }
 
+void Deck::setPosition(const sf::Vector2f& pos) {
+    this->pos = pos;
+}
+
 const unsigned short& Deck::getCardCount() const {
     return this->cardCount;
 }

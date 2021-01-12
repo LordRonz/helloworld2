@@ -5,9 +5,8 @@ TrashDeck::TrashDeck(std::vector<Deck*>* decks) : Deck(decks)  {
 }
 
 TrashDeck::~TrashDeck() {
-    for(auto& it: this->cards) {
+    for(auto& it: this->cards)
 	delete it;
-    }
 }
 
 void TrashDeck::addCard(Card* card) {
@@ -23,17 +22,15 @@ bool TrashDeck::passCard(const unsigned int& trgt, const double& dt) {
 }
 
 bool TrashDeck::throwDeck(const double& dt) {
-    if(this->cards.empty()) return false;
+    if(this->cards.empty()) return true;
     for(auto& it: this->cards) {
 	if(!it) continue;
-	if(vectorDistance(it->getPosition(), sf::Vector2f(1290.f, 360.f)) > 20.f) {
+	if(vectorDistance(it->getPosition(), sf::Vector2f(1290.f, 360.f)) > 20.f)
 	    it->move(dt, 1290.f, 360.f);
-	}
 	else {
 	    delete it;
 	    it = nullptr;
 	    --this->cardCount;
-	    //std::printf("%d\n", this->cardCount);
 	}
     }
     if(!this->cardCount) {
@@ -44,7 +41,7 @@ bool TrashDeck::throwDeck(const double& dt) {
 }
 
 void TrashDeck::rearrange() {
-    int i = 1;
+    unsigned i = 1;
     for(auto& it: this->cards) {
 	if(it)
 	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);

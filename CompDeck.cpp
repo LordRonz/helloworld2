@@ -3,12 +3,16 @@
 CompDeck::CompDeck(std::vector<Deck*>* decks) :Deck(decks) {
     this->setPosition(600.f, 10.f);
     this->selected = -1;
+    this->initRandomEngine();
 }
 
 CompDeck::~CompDeck() {
-    for(auto& it: this->cards) {
+    for(auto& it: this->cards)
 	delete it;
-    }
+}
+
+void CompDeck::initRandomEngine() {
+    this->rng.seed(std::random_device{}());
 }
 
 void CompDeck::addCard(Card* card) {
@@ -25,9 +29,8 @@ Card* CompDeck::getPassedCard() {
 void CompDeck::artificialStupidity(Card* card) {
     if(this->cards.empty()) return;
     if(!card) {
-	std::default_random_engine rng(std::random_device{}());
-	std::uniform_int_distribution<int> res(0, this->cards.size() - 1);
-	this->selected = res(rng);
+	std::uniform_int_distribution<> res(0, this->cards.size() - 1);
+	this->selected = res(this->rng);
 	return;
     }
     unsigned mnIndexFound(0), mnFound(15), mnIndexNotFound(0), mnNotFound(15);
@@ -89,18 +92,15 @@ void CompDeck::reset() {
 }
 
 void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
-    for(auto& it: this->cards) {
-	if(it)
-	    it->update(dt, mousePos);
-    }
+
 }
 
 void CompDeck::render(sf::RenderTarget* target) {
-    if(!target) return;
+    if(!target || this->cards.empty()) return;
     unsigned i = 0;
-    while(this->selected == i) ++i;
-    if(!this->cards.empty() && this->cards[i])
+    for(; this->selected == i && i < this->cards.size() - 1; ++i);
+    if(this->cards[i])
         this->cards[i]->render(target);
-    if(!this->cards.empty() && this->selected != -1 && this->cards[this->selected])
+    if(this->selected != -1 && this->cards[this->selected])
         this->cards[this->selected]->render(target);
 }

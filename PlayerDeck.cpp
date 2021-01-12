@@ -6,9 +6,8 @@ PlayerDeck::PlayerDeck(std::vector<Deck*>* decks) :Deck(decks) {
 }
 
 PlayerDeck::~PlayerDeck() {
-    for(auto& it: this->cards) {
+    for(auto& it: this->cards)
 	delete it;
-    }
 }
 
 void PlayerDeck::addCard(Card* card) {
@@ -51,9 +50,8 @@ void PlayerDeck::update(const double& dt, const sf::Vector2f& mousePos) {
     for(unsigned i = 0, j = this->cards.size(); i < j; ++i) {
 	if(!this->cards[i]) continue;
 	this->cards[i]->update(dt, mousePos);
-	if(this->selected == -1 && this->cards[i]->isClicked()) {
+	if(this->selected == -1 && this->cards[i]->isClicked())
 	    this->selected = i;
-	}
     }
 }
 
@@ -70,7 +68,7 @@ bool PlayerDeck::canMove(const unsigned int& kind) {
 }
 
 void PlayerDeck::rearrange() {
-    int i = 1;
+    unsigned i = 1;
     for(auto& it: this->cards) {
 	if(it)
 	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);

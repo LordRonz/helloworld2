@@ -7,6 +7,8 @@ private:
     std::vector<Card*> cards;
     int selected;
     Card* passedCard;
+    std::default_random_engine rng;
+    void initRandomEngine();
 
 public:
     CompDeck(std::vector<Deck*>* decks);
