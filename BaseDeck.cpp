@@ -56,6 +56,9 @@ Card* BaseDeck::getPassedCard() {
 
 //memberikan kartu ke deck lainnya, kalo udah nyampe return true, kalo belom return false
 bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
+    // karena kumpulan kartu di deck ini menggunakan stack, maka hanya dapat diakses pointer card
+    // yang terdapat di atas tumpukan (top), maka setiap kartu yang dioper adalah kartu yang ada di
+    // top()
     if(!this->cards.empty() && this->cards.top()) {
 	this->passedCard = this->cards.top();
 	if(vectorDistance(this->cards.top()->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {

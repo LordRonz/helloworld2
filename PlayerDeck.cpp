@@ -1,8 +1,7 @@
 #include "PlayerDeck.h"
 
-PlayerDeck::PlayerDeck(std::vector<Deck*>* decks, const float& x, const float& y) :Deck(decks, x, y) {
+PlayerDeck::PlayerDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y), selected(-1) {
     //init
-    this->selected = -1;
 }
 
 //bersih bersih

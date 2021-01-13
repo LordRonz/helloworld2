@@ -1,9 +1,7 @@
 #include "Card.h"
 
-Card::Card(const unsigned short& kind, const unsigned short& val, sf::Texture* texture, sf::Texture* buttText) {
+Card::Card(const unsigned short& kind, const unsigned short& val, sf::Texture* texture, sf::Texture* buttText) : kind(kind), val(val) {
     // init
-    this->kind = kind;
-    this->val = val;
     this->createSprite(texture, buttText);
 }
 

@@ -1,8 +1,7 @@
 #include "CompDeck.h"
 
-CompDeck::CompDeck(std::vector<Deck*>* decks, const float& x, const float& y) :Deck(decks, x, y) {
+CompDeck::CompDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y), selected(-1) {
     //inti stuff
-    this->selected = -1;
     this->initRandomEngine();
 }
 // cleanup
