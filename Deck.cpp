@@ -1,7 +1,9 @@
 #include "Deck.h"
 
-Deck::Deck(std::vector<Deck*>* decks) {
+Deck::Deck(std::vector<Deck*>* decks, const float& x, const float& y) {
     this->decks = decks;
+    this->pos.x = x;
+    this->pos.y = y;
 }
 
 Deck::~Deck() {

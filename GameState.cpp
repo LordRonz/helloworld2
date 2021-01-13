@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : State(window, states){
+    //fungsi-fungsi buat inisialisasi dicall smua disini, biar rapih
     this->initRenderTexture();
     this->initBackground();
     this->initTextures();
@@ -9,6 +10,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
     this->initEndGame();
 }
 
+//bersih-bersih
 GameState::~GameState() {
     delete this->endGame;
     for(auto& it: this->decks) {
@@ -16,16 +18,20 @@ GameState::~GameState() {
     }
 }
 
+//rendertexture itu semacam kanvas tapi belum ditampilkan di layar, dirender di gpu, jadi nanti
+//tinggal digabung dan digambar sekali ke layar
 void GameState::initRenderTexture() {
     this->renderTexture.create(1280.f, 720.f);
     this->renderSprite.setTexture(this->renderTexture.getTexture());
 }
 
+//inisialisasi font
 void GameState::initFonts() {
     if(!this->font.loadFromFile("res/fonts/lhf_american_sans.ttf"))
 	std::puts("ERROR LOADING FONT");
 }
 
+// endgame ni blum jadi
 void GameState::initEndGame() {
     this->endGame = new EndGame(&this->font);
 }
@@ -47,6 +53,8 @@ void GameState::initBackground() {
 
 //inisialisasi texture
 void GameState::initTextures() {
+    //daripada ngetik 1 1 load fromfilenya, karena texturenya banyak pake for loop dan string
+    //concatenation biar pendek
     std::string path = "res/txrs/cards/";
     std::vector<std::string> crds{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
     for(const std::string& c: crds) {
@@ -65,13 +73,16 @@ void GameState::initTextures() {
 
 //inisialisasi deck
 void GameState::initDecks() {
-    this->decks.push_back(new BaseDeck(&this->decks));
+    //deck bandar diinisialisasi
+    this->decks.push_back(new BaseDeck(&this->decks, 10.f, 10.f));
+    //same trick as initTextures
     std::map<unsigned short, std::string> knd {
 	{1, "D"},
 	{2, "H"},
 	{3, "C"},
 	{4, "S"}
     };
+
     std::map<unsigned short, std::string> val {
 	{1, "2"},
 	{2, "3"},
@@ -87,24 +98,33 @@ void GameState::initDecks() {
 	{12, "K"},
 	{13, "A"}
     };
+    //ini dummycard buat deck bandar
     this->decks[0]->addCard(new Card(static_cast<unsigned short>(0), static_cast<unsigned short>(0), &this->textures["BUTT"], &this->textures["BUTT"]));
+
+    //vector biar praktis aja sih, kayak initTextures, kalo ga panjang bgt, sama biar gampang
+    //ngocoknya
     std::vector<Card*> tmp;
     for(auto& it1: val) {
 	for(auto& it2 : knd)
 	    tmp.push_back(new Card(it2.first, it1.first, &this->textures[it1.second + it2.second], &this->textures["BUTT"]));
     }
+    //ngocok
     std::shuffle(tmp.begin(), tmp.end(), std::default_random_engine(std::random_device{}()));
+    //habis dikocok, smua card ditaro di BaseDeck
     for(auto& crd: tmp)
 	this->decks[Player0]->addCard(crd);
-    this->decks.push_back(new PlayerDeck(&this->decks));
-    this->decks.push_back(new CompDeck(&this->decks));
-    this->decks.push_back(new TrashDeck(&this->decks));
+    //inisialisasi deck2 lain
+    this->decks.push_back(new PlayerDeck(&this->decks, 500.f, 500.f));
+    this->decks.push_back(new CompDeck(&this->decks, 600.f, 10.f));
+    this->decks.push_back(new TrashDeck(&this->decks, 500.f, 240.f));
 }
 
 //update
 void GameState::update(const double& dt) {
+    // update posisi mouse
     this->updateMousePos();
     this->updateInput(dt);
+    //cek kalo ada yang menang
     if(!this->someoneWon)
 	this->updateDecks(dt);
     else
@@ -114,6 +134,7 @@ void GameState::update(const double& dt) {
 //update tiap deck
 void GameState::updateDecks(const double& dt) {
     //First move
+    // ini bagian dimana si bandar ngebagi kartu ke tiap pemain
     bool tmp = this->begin;
     if(this->decks[Player0]->getCardCount() > 39) {
 	if(this->decks[Player0]->passCard(this->passDeck, dt)) {
@@ -123,6 +144,8 @@ void GameState::updateDecks(const double& dt) {
     }
     else if(!this->begin) {
     	if(this->decks[Player0]->passCard(Trash, dt)) {
+	    //cmpcards ini vector yang isinya kartu2 yang mau dicompare, pake pair biar tau ini
+	    //kartunya punya siapa
 	    this->cmpCards.push_back(std::make_pair(Player0, this->decks[Player0]->getPassedCard()));
 	    this->begin = true;
 	}
@@ -131,12 +154,14 @@ void GameState::updateDecks(const double& dt) {
     if(this->begin) {
 	for(auto& it: this->decks)
 	    it->update(dt, this->mousePosView);
+	//turn ini adalah bitset, simplenya array boolean lah, set akan mengatur semua boolean
+	//menjadi true
 	if(!tmp)
 	    this->turn.set();
     }
     else return;
     
-    //cek apakah salah satu deck pemain kosong
+    //cek apakah salah satu deck pemain kosong, kalo iya berarti cek siapa yang menang
     for(unsigned i = 1, j = this->decks.size() - 1; i < j; ++i) {
 	if(this->decks[i]->getCardCount() == 0) {
 	    this->someoneWon = true;
@@ -146,16 +171,23 @@ void GameState::updateDecks(const double& dt) {
 	}
     }
 
+    //kalo giliran player selain manusia
     if(this->turn[Player2 - 1])
 	this->updateComp(dt);
-
+    
+    //giliran player manusia
     else if(this->turn[Player1 - 1])
 	this->updatePlayer(dt);
 
+    //kalo semua turn false, saatnya membandingkan siapa yang terbesar nilainya dengan method
+    //compareCards
     if(this->turn.none()) {
+	//kalo pemenangnya belum ditentukan, panggil method compareCards
+	//kenapa pake if, biar ga berkali2 call method
 	if(this->winner == -1)
 	    this->compareCards();
 	if(this->decks[Trash]->passCard(69, dt)) {
+	    //kalo masuk sini, brarti deck sudah dibuang, saatnya mengatur giliran dll
 	    this->cmpCards.clear();
 	    this->turn.reset();
 	    this->turn[winner] = true;
@@ -169,12 +201,14 @@ void GameState::updateEndGame(const double& dt) {
     this->endGame->update(this->mousePosView);
 }
 
+// cek apakah si player manusia ini memilih kartu yang jenisnya valid
 const bool GameState::isValid(const int& selected) const{
     if(this->begin && !this->cmpCards.empty())
 	return this->cmpCards.front().second->getKind() == this->decks[Player1]->getKindAtIndex(selected);
     return false;
 }
 
+// tentukan pemenang
 void GameState::compareCards() {
     if(this->firstMove && this->cmpCards.size() == 1) {
 	this->winner = Player2 - 1;
@@ -197,6 +231,7 @@ void GameState::compareCards() {
 bool GameState::updateComp(const double& dt) {
     //kondisi jika player ini yang mulai duluan
     if(this->turn[Player2 - 1] && this->cmpCards.empty()) {
+	//kalo si deck computer belum milih kartu, ya suruh pilih menggunakan artificialStupidity
 	if(this->decks[Player2]->getSelected() == -1)
 	    this->decks[Player2]->artificialStupidity(nullptr);
 
@@ -210,6 +245,7 @@ bool GameState::updateComp(const double& dt) {
 
     //kondisi jika player ini tidak mulai duluan
     else if(this->turn[Player2 - 1] && this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
+	//ya artificial stupidity
 	if(this->decks[Player2]->getSelected() == -1)
 	    this->decks[Player2]->artificialStupidity(this->cmpCards.front().second);
     	if(this->decks[Player2]->passCard(Trash, dt)) {
@@ -218,7 +254,7 @@ bool GameState::updateComp(const double& dt) {
 	    this->decks[Player2]->reset();
 	}
     }
-
+    // gabisa gerak, ambil kartu dari bandar
     else if(!this->cmpCards.empty() && !this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player2, dt)) {
 	    this->turn[Player2 - 1] = false;
@@ -230,8 +266,10 @@ bool GameState::updateComp(const double& dt) {
     return false; 
 }
 
-//update player
+//update player manusia
 bool GameState::updatePlayer(const double& dt) {
+
+    //giliran player, karena menang round sebelumnya
     if(this->turn[Player1 - 1] && this->cmpCards.empty()) {
 	if(this->decks[Player1]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));
@@ -240,7 +278,7 @@ bool GameState::updatePlayer(const double& dt) {
 	    this->decks[Player1]->reset();
 	}
     }
-
+    // counter
     else if(this->turn[Player1 - 1] && this->decks[Player1]->canMove(this->cmpCards.front().second->getKind()) && this->isValid(this->decks[Player1]->getSelected())) {
 	if(this->decks[Player1]->passCard(Trash, dt)) {
 	    this->cmpCards.push_back(std::make_pair(Player1, this->decks[Player1]->getPassedCard()));
@@ -248,7 +286,7 @@ bool GameState::updatePlayer(const double& dt) {
 	    this->decks[Player1]->reset();
 	}
     }
-
+    // ga bisa gerak, ambil kartu di bandar
     else if(!this->cmpCards.empty() && !this->decks[Player1]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player1, dt)) {
 	    this->turn[Player1 - 1] = false;
@@ -259,7 +297,7 @@ bool GameState::updatePlayer(const double& dt) {
 	this->decks[Player1]->reset();
     return false;
 }
-
+// render stuff
 void GameState::render(sf::RenderTarget* target) {
     if(!target) target = this->window;
     this->renderTexture.clear();
@@ -273,6 +311,8 @@ void GameState::render(sf::RenderTarget* target) {
     target->draw(this->renderSprite);
 }
 
+
+// blum dipake
 void GameState::updateInput(const double& dt) {
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	//this->player->move(dt, 0.f, -1.f);

@@ -21,7 +21,8 @@ protected:
     bool selected{};
     bool wasSelected{};
     bool clicked{};
-    bool butt{true};
+    bool butt{1};
+    void updateInput(const double& dt, const sf::Vector2f& mousePos);
 
 public:
     Card(const unsigned short& kind, const unsigned short& val, sf::Texture* texture, sf::Texture* buttText);

@@ -12,7 +12,7 @@ protected:
     unsigned short cardCount{};
     
 public:
-    Deck(std::vector<Deck*>* decks);
+    Deck(std::vector<Deck*>* decks, const float& x, const float& y);
     virtual ~Deck();
     virtual void update(const double& dt, const sf::Vector2f& mousePos);
     virtual void render(sf::RenderTarget* target);

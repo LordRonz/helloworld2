@@ -11,7 +11,7 @@ private:
     void initRandomEngine();
 
 public:
-    CompDeck(std::vector<Deck*>* decks);
+    CompDeck(std::vector<Deck*>* decks, const float& x, const float& y);
     ~CompDeck();
     void addCard(Card* card);
     bool passCard(const unsigned int& trgt, const double& dt);
