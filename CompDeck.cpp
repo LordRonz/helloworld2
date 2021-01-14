@@ -77,7 +77,9 @@ void CompDeck::artificialStupidity(Card* card) {
 
 //oper kartu
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
-    if(!this->cards.empty() && this->selected < this->cards.size() && this->cards[this->selected]) {
+    // tidak ada kartu yang dipilih, return false
+    if(this->selected == -1) return false;
+    if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    // kalo masuk sini berarti belum nyampe, gerakkin spritenya pake some maffs
@@ -123,8 +125,8 @@ void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
 //render
 void CompDeck::render(sf::RenderTarget* target) {
     if(!target || this->cards.empty()) return;
-    unsigned i = 0;
-    for(; this->selected == i && i < this->cards.size() - 1; ++i);
+    int i = 0;
+    for(; this->selected == i && i < static_cast<int>(this->cards.size()) - 1; ++i);
     if(this->cards[i])
         this->cards[i]->render(target);
     if(this->selected != -1 && this->cards[this->selected])

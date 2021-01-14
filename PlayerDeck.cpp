@@ -27,12 +27,13 @@ Card* PlayerDeck::getPassedCard() {
 
 // return kind at specified index
 unsigned short PlayerDeck::getKindAtIndex(const int& index) {
-    return index >= 0 && index < this->cards.size() && this->cards[index] ? this->cards[index]->getKind() : -1;
+    return index >= 0 && index < static_cast<int>(this->cards.size()) && this->cards[index] ? this->cards[index]->getKind() : -1;
 }
 
 // oper kartu ke deck lain
 bool PlayerDeck::passCard(const unsigned int& trgt, const double& dt) {
-    if(!this->cards.empty() && this->selected >= 0 && this->selected < this->cards.size() && this->cards[this->selected]) {
+    if(this->selected == -1) return false;
+    if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 
 	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {

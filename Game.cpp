@@ -5,8 +5,6 @@
 
 Game::Game() {
     this->initWindow();
-    this->window->setFramerateLimit(FPS);
-    this->window->setVerticalSyncEnabled(false);
     this->initStates();
 }
 
@@ -32,12 +30,16 @@ void Game::updateEvents() {
 	    case sf::Event::Closed:
 		this->window->close();
 		break;
+	    default:
+		break;
 	}
     }
 }
 
 void Game::initWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(SCRWIDTH, SCRHEIGHT), "Hello World 2");
+    this->window->setFramerateLimit(FPS);
+    this->window->setVerticalSyncEnabled(false);
 }
 
 void Game::initStates() {
@@ -45,6 +47,8 @@ void Game::initStates() {
 }
 
 void Game::update() {
+    this->updateDt();
+
     this->updateEvents();
 
     if(!this->states.empty()) {
@@ -75,7 +79,6 @@ void Game::render() {
 
 void Game::run() {
     while(this->window->isOpen()) {
-	this->updateDt();
 	this->update();
 	this->render();
     }

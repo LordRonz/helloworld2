@@ -6,9 +6,9 @@ enum deck_type {Player0, Player1, Player2, Trash};
 
 class Deck {
 protected:
+    std::vector<Deck*>* decks;
     sf::Vector2f pos;
     unsigned short type;
-    std::vector<Deck*>* decks;
     unsigned short cardCount{};
     
 public:
