@@ -12,3 +12,13 @@ float vectorDistance(const sf::Vector2f& vec1, const sf::Vector2f& vec2) {
 
     return std::sqrt(std::pow(dVec.x, 2) + std::pow(dVec.y, 2));
 }
+
+sf::Vector2f normalizeDir(const float& x1, const float& y1, const float& x2, const float& y2) {
+    const sf::Vector2f dir = sf::Vector2f(x1 - x2, y1 - y2);
+    return dir / static_cast<float>(std::sqrt(std::pow(dir.x, 2) + std::pow(dir.y, 2)));
+}
+
+sf::Vector2f normalizeDir(const sf::Vector2f& vec1, const sf::Vector2f& vec2) {
+    const sf::Vector2f dir = vec2 - vec1;
+    return dir / static_cast<float>(std::sqrt(std::pow(dir.x, 2) + std::pow(dir.y, 2)));
+}

@@ -214,8 +214,8 @@ void GameState::compareCards() {
 	this->winner = Player2 - 1;
 	return;
     }
-    unsigned maxIndex = 0;
-    int maxVal = -1;
+    unsigned maxIndex = 0, maxVal = 0;
+
     for(unsigned i = this->firstMove ? 1 : 0, j = this->cmpCards.size(); i < j; ++i) {
 	if(!this->cmpCards[i].second) continue;
         int tmp;
