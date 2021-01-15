@@ -319,4 +319,3 @@ void GameState::updateInput(const double& dt) {
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	//this->player->move(dt, 0.f, 1.f);
 }
-

@@ -10,7 +10,8 @@ class Game {
 	double dt;
 
 	std::stack<State*> states;
-
+	
+	// Functions
 	void initWindow();
 	void initStates();
 

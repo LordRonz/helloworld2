@@ -13,24 +13,26 @@ private:
     sf::RectangleShape bg;
     sf::Font font;
     EndGame* endGame;
+    bool firstMove{true};
     bool someoneWon{};
+    std::bitset<PLAYER_COUNT> turn;
+    std::vector<std::pair<int, Card*>> cmpCards{};
+    int passDeck{Player1};
+    int winner{-1};
+    bool begin{};
+
+    // Functions
     void initRenderTexture();
     void initBackground();
     void initTextures();
     void initDecks();
     void initFonts();
     void initEndGame();
-    int passDeck{Player1};
-    int winner{-1};
-    bool begin{};
     void updateDecks(const double& dt);
     void updateEndGame(const double& dt);
     bool updatePlayer(const double& dt);
     bool updateComp(const double& dt);
-    std::bitset<PLAYER_COUNT> turn;
-    std::vector<std::pair<int, Card*>> cmpCards{};
     const bool isValid(const int& selected) const;
-    bool firstMove{true};
     void compareCards();
 
 public:
