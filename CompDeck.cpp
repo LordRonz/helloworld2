@@ -21,6 +21,7 @@ void CompDeck::addCard(Card* card) {
     // sama aja kayak playerDeck
     if(!card) return;
     ++this->cardCount;
+    if(!card->isButt()) card->flip();
     this->cards.push_back(card);
     //tapi ini posisinya sama semua
     this->cards.back()->setPosition(this->pos.x, this->pos.y);
@@ -78,7 +79,7 @@ void CompDeck::artificialStupidity(Card* card) {
 //oper kartu
 bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
     // tidak ada kartu yang dipilih, return false
-    if(this->selected == -1) return false;
+    if(this->selected < 0) return false;
     if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
@@ -87,7 +88,6 @@ bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
 	}
 	else {
 	    //nyampe, oper pointer
-	    if(trgt == Trash || trgt == Player1) this->cards[this->selected]->flip();
 	    (*this->decks)[trgt]->addCard(this->cards[this->selected]);
 	    this->cards.erase(this->cards.begin() + this->selected);
 	    --this->cardCount;

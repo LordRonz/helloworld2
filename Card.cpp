@@ -51,6 +51,7 @@ void Card::update(const double& dt, const sf::Vector2f& mousePos) {
 // update input
 void Card::updateInput(const double& dt, const sf::Vector2f& mousePos) {
     if(!this->sprite) return;
+    this->clicked = false;
     if(this->sprite->getGlobalBounds().contains(mousePos)) {
 	if(!this->hover) {
 	    this->sprite->setColor(sf::Color(255, 255, 255, 255));
@@ -89,6 +90,11 @@ void Card::flip() {
 // apakah saya sedang di klik??, yang ngatur ada di updateInput
 const bool& Card::isClicked() const {
     return this->clicked;
+}
+
+// cek apakah kartu tampak belakang
+const bool& Card::isButt() const {
+    return this->butt;
 }
 
 //jenis apakah aku

@@ -37,5 +37,6 @@ public:
     const unsigned short& getKind() const;
     const unsigned short& getVal() const;
     void flip();
+    const bool& isButt() const;
     const bool& isClicked() const;
 };

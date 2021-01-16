@@ -22,6 +22,8 @@ void BaseDeck::addCard(Card* card) {
 
     //apabila jumlah kartu == 0, dalam artian kosong, maka tambah kartu ke dummy, selain itu ya
     //dipush ke stack
+
+    if(!card->isButt()) card->flip();
     if(!this->cardCount++) {
         this->dummy = card;
         this->dummy->setPosition(this->pos.x, this->pos.y);
@@ -67,7 +69,6 @@ bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
 	}
 	else {
 	    //kalo masuk kesini, brarti udah nyampe, saatnya memindahkan pointer cardnya
-	    if(trgt == Player1 || trgt == Trash) this->cards.top()->flip();
 	    (*this->decks)[trgt]->addCard(this->cards.top());
 	    this->cards.pop();
 	    --this->cardCount;

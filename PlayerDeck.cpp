@@ -16,6 +16,7 @@ void PlayerDeck::addCard(Card* card) {
     if(!card) return;
     //untuk tiap kartu ditambahkan, increment cardCount
     ++this->cardCount;
+    if(card->isButt()) card->flip();
     this->cards.push_back(card);
     this->rearrange();
 }
@@ -32,7 +33,7 @@ unsigned short PlayerDeck::getKindAtIndex(const int& index) {
 
 // oper kartu ke deck lain
 bool PlayerDeck::passCard(const unsigned int& trgt, const double& dt) {
-    if(this->selected == -1) return false;
+    if(this->selected < 0) return false;
     if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 

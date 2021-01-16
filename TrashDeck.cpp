@@ -13,6 +13,7 @@ TrashDeck::~TrashDeck() {
 void TrashDeck::addCard(Card* card) {
     if(!card) return;
     ++this->cardCount;
+    if(card->isButt()) card->flip();
     this->cards.push_back(card);
     //atur posisi
     this->rearrange();
@@ -20,7 +21,24 @@ void TrashDeck::addCard(Card* card) {
 
 // passCard disini gunanya sebenarnya buang smua kartu
 bool TrashDeck::passCard(const unsigned int& trgt, const double& dt) {
-    return this->throwDeck(dt);
+    if(trgt > Trash)
+	return this->throwDeck(dt);
+
+    if(!this->cards.empty() && this->cards[0]) {
+	if(vectorDistance(this->cards[0]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
+	    // masih gerakin spritenya, pointer masih di sini
+	    this->cards[0]->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
+	}
+	else {
+	    //kalo masuk sini, brarti kartu sudah sampai dan saatnya mengoper card pointer
+	    (*this->decks)[trgt]->addCard(this->cards[0]);
+	    this->cards.erase(this->cards.begin() + 0);
+	    --this->cardCount;
+	    this->rearrange();
+	    return true;
+	}
+    }
+    return false;
 }
 
 // buang kartu
