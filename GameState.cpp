@@ -257,7 +257,6 @@ bool GameState::updateComp(const double& dt) {
     // gabisa gerak, ambil kartu dari bandar
     else if(!this->cmpCards.empty() && !this->decks[Player2]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player2, dt)) {
-	    this->turn[Player2 - 1] = false;
 	    this->decks[Player2]->reset();
 	}
     }
@@ -289,7 +288,6 @@ bool GameState::updatePlayer(const double& dt) {
     // ga bisa gerak, ambil kartu di bandar
     else if(!this->cmpCards.empty() && !this->decks[Player1]->canMove(this->cmpCards.front().second->getKind())) {
 	if(this->decks[Player0]->passCard(Player1, dt)) {
-	    this->turn[Player1 - 1] = false;
 	    this->decks[Player1]->reset();
 	}
     }
