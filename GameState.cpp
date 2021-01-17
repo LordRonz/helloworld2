@@ -74,7 +74,7 @@ void GameState::initTextures() {
 //inisialisasi deck
 void GameState::initDecks() {
     //deck bandar diinisialisasi
-    this->decks.push_back(new BaseDeck(&this->decks, 10.f, 10.f));
+    this->decks.push_back(new BaseDeck(&this->decks, 10.f, 10.f, &this->font));
     //same trick as initTextures
     std::map<unsigned short, std::string> knd {
 	{1, "D"},
@@ -114,9 +114,9 @@ void GameState::initDecks() {
     for(auto& crd: tmp)
 	this->decks[Player0]->addCard(crd);
     //inisialisasi deck2 lain
-    this->decks.push_back(new PlayerDeck(&this->decks, 500.f, 500.f));
-    this->decks.push_back(new CompDeck(&this->decks, 600.f, 10.f));
-    this->decks.push_back(new TrashDeck(&this->decks, 500.f, 240.f));
+    this->decks.push_back(new PlayerDeck(&this->decks, 500.f, 500.f, &this->font));
+    this->decks.push_back(new CompDeck(&this->decks, 600.f, 10.f, &this->font));
+    this->decks.push_back(new TrashDeck(&this->decks, 500.f, 240.f, &this->font));
 }
 
 //update

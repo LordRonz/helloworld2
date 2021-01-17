@@ -1,14 +1,25 @@
 #include "CompDeck.h"
 
-CompDeck::CompDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y), selected(-1) {
+CompDeck::CompDeck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font) : Deck(decks, x, y, font), selected(-1) {
     //inti stuff
     this->initRandomEngine();
+    this->initText(font, 30);
 }
 // cleanup
 CompDeck::~CompDeck() {
     //biar ga memory leak, soalnya pointer card dynamically allocated dengan new
     for(auto& it: this->cards)
 	delete it;
+}
+
+void CompDeck::initText(sf::Font* font, unsigned sz) {
+    this->font = font;
+    this->text.setFont(*this->font);
+    this->text.setCharacterSize(sz);
+    this->text.setFillColor(sf::Color::Red);
+    this->text.setPosition(
+	this->pos.x + 120.f, this->pos.y
+    );
 }
 
 // inisialisasi random engine, buat dipakai di artificialStupidity
@@ -119,7 +130,7 @@ void CompDeck::reset() {
 
 //update kosong aja, karena sebenernya cuma update input jg
 void CompDeck::update(const double& dt, const sf::Vector2f& mousePos) {
-
+    this->text.setString(std::to_string(this->cardCount) + (this->cardCount > 1 ? " cards" : " card"));
 }
 
 //render
@@ -131,4 +142,6 @@ void CompDeck::render(sf::RenderTarget* target) {
         this->cards[i]->render(target);
     if(this->selected != -1 && this->cards[this->selected])
         this->cards[this->selected]->render(target);
+
+    target->draw(this->text);
 }

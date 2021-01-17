@@ -1,6 +1,6 @@
 #include "BaseDeck.h"
 
-BaseDeck::BaseDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y) {
+BaseDeck::BaseDeck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font) : Deck(decks, x, y, font) {
     // self explanatory
 }
 

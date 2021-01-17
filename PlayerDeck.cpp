@@ -1,6 +1,6 @@
 #include "PlayerDeck.h"
 
-PlayerDeck::PlayerDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y), selected(-1) {
+PlayerDeck::PlayerDeck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font) : Deck(decks, x, y, font), selected(-1) {
     //init
 }
 

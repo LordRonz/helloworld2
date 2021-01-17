@@ -1,14 +1,15 @@
 #include "Deck.h"
 
-Deck::Deck(std::vector<Deck*>* decks, const float& x, const float& y) : decks(decks), pos(sf::Vector2f(x, y)) {
+Deck::Deck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font) : decks(decks), pos(sf::Vector2f(x, y)) {
+    this->initText(font, 20);
 }
 
 Deck::~Deck() {
 
 }
 
-void Deck::addCard(Card* card) {
-    ++this->cardCount;
+void Deck::initText(sf::Font* font, unsigned sz) {
+
 }
 
 void Deck::update(const double& dt, const sf::Vector2f& mousePos) {
@@ -27,10 +28,6 @@ bool Deck::canMove(const unsigned int& kind) {
 
 Card* Deck::getPassedCard() {
     return nullptr;
-}
-
-bool Deck::passCard(const unsigned int& trgt, const double& dt) {
-    return false;
 }
 
 //return decks position

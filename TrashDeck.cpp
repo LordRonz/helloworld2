@@ -1,6 +1,6 @@
 #include "TrashDeck.h"
 
-TrashDeck::TrashDeck(std::vector<Deck*>* decks, const float& x, const float& y) : Deck(decks, x, y)  {
+TrashDeck::TrashDeck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font) : Deck(decks, x, y, font)  {
 }
 
 //cleanup

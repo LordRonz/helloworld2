@@ -9,9 +9,10 @@ private:
     Card* passedCard;
     std::default_random_engine rng;
     void initRandomEngine();
+    void initText(sf::Font* font, unsigned sz);
 
 public:
-    CompDeck(std::vector<Deck*>* decks, const float& x, const float& y);
+    CompDeck(std::vector<Deck*>* decks, const float& x, const float& y, sf::Font* font);
     ~CompDeck();
     void addCard(Card* card);
     bool passCard(const unsigned int& trgt, const double& dt);
