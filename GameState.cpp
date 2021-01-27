@@ -21,7 +21,7 @@ GameState::~GameState() {
 //rendertexture itu semacam kanvas tapi belum ditampilkan di layar, dirender di gpu, jadi nanti
 //tinggal digabung dan digambar sekali ke layar
 void GameState::initRenderTexture() {
-    this->renderTexture.create(1280.f, 720.f);
+    this->renderTexture.create(this->window->getSize().x, this->window->getSize().y);
     this->renderSprite.setTexture(this->renderTexture.getTexture());
 }
 

@@ -1,7 +1,7 @@
 #include "Game.h"
 #define SCRWIDTH 1280
 #define SCRHEIGHT 720
-#define FPS 60
+#define FPS 120
 
 Game::Game() {
     this->initWindow();

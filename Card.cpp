@@ -39,8 +39,8 @@ void Card::move(const double& dt, const float& dir_x, const float& dir_y) {
     // maff stuff
     const sf::Vector2f dirNorm = normalizeDir(dir_x, dir_y, this->sprite->getPosition().x, this->sprite->getPosition().y);
 
-    this->sprite->move(dirNorm * this->movSpeed);
-    this->buttSprite->move(dirNorm * this->movSpeed);
+    this->sprite->move(dirNorm * static_cast<float>(this->movSpeed * dt));
+    this->buttSprite->move(dirNorm * static_cast<float>(this->movSpeed * dt));
 }
 
 //update, isinya cuma update input sih

@@ -13,7 +13,7 @@ class Card {
 protected:
     unsigned short kind;
     unsigned short val;
-    float movSpeed{25.f};
+    float movSpeed{1369.f};
     sf::Vector2f currVelocity{0.f, 0.f};
     sf::Sprite* sprite{};
     sf::Sprite* buttSprite{};
