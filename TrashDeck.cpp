@@ -60,8 +60,7 @@ bool TrashDeck::throwDeck(const double& dt) {
     }
     // jika jumlah kartunya 0, hapus semua pointer di vector
     // note: yang dihapus pointernya bukan allocated datanya
-    if(!this->cardCount) {
-	//std::puts("Cleared");
+    if(!this->cardCount) { // sama aja kayak this->cardCount == 0
 	this->cards.clear();
     }
     return !this->cardCount;
@@ -76,10 +75,6 @@ void TrashDeck::rearrange() {
     }
 }
 
-// not used
-void TrashDeck::update(const double& dt, const sf::Vector2f& mousePos) {
-
-}
 
 //render
 void TrashDeck::render(sf::RenderTarget* target) {

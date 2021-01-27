@@ -262,8 +262,11 @@ bool GameState::updateComp(const double& dt) {
 	    }
 	}
 	else {
+	    unsigned tmp = this->cmpCards.front().first;
 	    if(this->decks[Trash]->passCard(Player2, dt)) {
 		this->decks[Player2]->reset();
+		this->turn.reset();
+		this->turn[tmp - 1] = true;
 	    }
 	}
     }
@@ -300,8 +303,11 @@ bool GameState::updatePlayer(const double& dt) {
 	    }
 	}
 	else {
+	    unsigned tmp = this->cmpCards.front().first;
 	    if(this->decks[Trash]->passCard(Player1, dt)) {
 		this->decks[Player1]->reset();
+		this->turn.reset();
+		this->turn[tmp - 1] = true;
 	    }
 	}
     }
