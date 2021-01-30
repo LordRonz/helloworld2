@@ -12,6 +12,7 @@ private:
     sf::Texture bgTexture;
     sf::RectangleShape bg;
     sf::Font font;
+    PauseMenu* pMenu;
     EndGame* endGame;
     bool firstMove{true};
     bool someoneWon{};
@@ -27,6 +28,7 @@ private:
     void initTextures();
     void initDecks();
     void initFonts();
+    void initPause();
     void initEndGame();
     void updateDecks(const double& dt);
     void updateEndGame(const double& dt);

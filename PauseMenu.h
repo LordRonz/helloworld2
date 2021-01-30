@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameState.h"
+#include "Button.h"
 
 class PauseMenu {
 private:
@@ -8,6 +8,7 @@ private:
     sf::Text text;
 
     sf::RectangleShape bg;
+    sf::RectangleShape container;
 
     std::unordered_map<std::string, Button*> buttons;
 

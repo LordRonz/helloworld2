@@ -7,6 +7,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
     this->initTextures();
     this->initDecks();
     this->initFonts();
+    this->initPause();
     this->initEndGame();
 }
 
@@ -34,6 +35,14 @@ void GameState::initFonts() {
 // endgame ni blum jadi
 void GameState::initEndGame() {
     this->endGame = new EndGame(&this->font);
+}
+
+void GameState::initPause() {
+    this->pMenu = new PauseMenu(this->window, &this->font);
+    float width = 0.13f * this->window->getSize().x;
+    float height = 0.06f * this->window->getSize().y;
+    float y = 0.74f * this->window->getSize().y;
+    this->pMenu->addButton("QUIT", y, width, height, 30, "Quit");
 }
 
 //inisialisasi background

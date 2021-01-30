@@ -1,7 +1,13 @@
 #include "PauseMenu.h"
 
 PauseMenu::PauseMenu(sf::Window* window, sf::Font* font) :font(font) {
-    
+    this->bg.setSize(
+    	sf::Vector2f(
+	   static_cast<float>(window->getSize().x), 
+	   static_cast<float>(window->getSize().y)
+    	)
+    );
+    this->bg.setFillColor(sf::Color(20, 20, 20, 100)); 
 }
 
 PauseMenu::~PauseMenu() {
@@ -14,13 +20,21 @@ bool PauseMenu::isButtonPressed(const std::string& key) {
 }
 
 void PauseMenu::addButton(
-	const std::string& key,
-	const float& y,
-	const float& width,
-	const float& height,
-	const unsigned& char_sz,
-	const std::string& text) {
+    const std::string& key,
+    const float& y,
+    const float& width,
+    const float& height,
+    const unsigned& char_sz,
+    const std::string& text) {
     
+    float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
+
+    this->buttons[key] = new Button(
+    	x, y, width, height,
+    	this->font, text, char_sz,
+    	sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+    	sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)
+	);    
 }
 
 void PauseMenu::update(const sf::Vector2f& mousePosWindow) {
