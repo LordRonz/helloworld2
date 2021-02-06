@@ -37,16 +37,17 @@ void PauseMenu::addButton(
 	);    
 }
 
-void PauseMenu::update(const sf::Vector2f& mousePosWindow) {
+void PauseMenu::update(const sf::Vector2f& mousePosView) {
     for(auto& it: this->buttons) {
 	if(it.second)
-	    it.second->update(mousePosWindow);
+	    it.second->update(mousePosView);
     }
 }
 
 void PauseMenu::render(sf::RenderTarget* target) {
     if(!target) return;
     target->draw(this->bg);
+    target->draw(this->container);
 
     for(auto& it: this->buttons) {
 	if(it.second)

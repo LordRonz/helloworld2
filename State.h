@@ -7,10 +7,19 @@ class State {
 	sf::RenderWindow* window{};
 	std::map<std::string, sf::Texture> textures;
 	bool end{};
+	bool paused{};
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
+	
+	sf::Clock keyTimer;
+	float keyTimeMax;
+
+	void initKeyTimer();
+	bool getKeyTime();
+	void pauseState();
+	void unpauseState();
 
     public:
 	State(sf::RenderWindow* window, std::stack<State*>* states);

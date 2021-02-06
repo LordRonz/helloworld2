@@ -24,6 +24,6 @@ public:
 	const float& height,
 	const unsigned& char_sz,
 	const std::string& text);
-    void update(const sf::Vector2f& mousePosWindow);
+    void update(const sf::Vector2f& mousePosView);
     void render(sf::RenderTarget* target);
 };

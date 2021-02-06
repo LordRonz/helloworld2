@@ -134,10 +134,15 @@ void GameState::update(const double& dt) {
     this->updateMousePos();
     this->updateInput(dt);
     //cek kalo ada yang menang
-    if(!this->someoneWon)
-	this->updateDecks(dt);
-    else
-	this->updateEndGame(dt);
+    if(!this->paused) {
+	if(!this->someoneWon)
+	    this->updateDecks(dt);
+	else
+	    this->updateEndGame(dt);
+    }
+    else {
+	this->pMenu->update(this->mousePosView);
+    }
 }
 
 //update tiap deck
@@ -334,15 +339,25 @@ void GameState::render(sf::RenderTarget* target) {
 	    it->render(&this->renderTexture);
     }
     if(this->someoneWon) this->endGame->render(&this->renderTexture);
+    else if(this->paused && this->pMenu) {
+	this->pMenu->render(&this->renderTexture);
+    }
     this->renderTexture.display();
     target->draw(this->renderSprite);
 }
 
 
-// blum dipake
+// input
 void GameState::updateInput(const double& dt) {
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	//this->player->move(dt, 0.f, -1.f);
     //if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	//this->player->move(dt, 0.f, 1.f);
+    this->isEscPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Escape);
+    
+    if(!this->isEscPressed && this->wasEscPressed) {
+	this->paused ? this->unpauseState() : this->pauseState();
+    }
+
+    this->wasEscPressed = this->isEscPressed;
 }

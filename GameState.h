@@ -21,6 +21,8 @@ private:
     int passDeck{Player1};
     int winner{-1};
     bool begin{};
+    bool isEscPressed{};
+    bool wasEscPressed{};
 
     // Functions
     void initRenderTexture();
