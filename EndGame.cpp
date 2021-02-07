@@ -12,14 +12,32 @@ EndGame::EndGame(sf::Font* font) {
 
 EndGame::~EndGame() {
     for(auto& it: this->buttons) 
-	delete it;
+	delete it.second;
 }
 
 void EndGame::initButtons() {
-    this->buttons.push_back(new Button(640.f, 360.f, 30, 30,
-				this->font, "EXIT", 15, 
-				sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
-				sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)));
+    //this->buttons.push_back(new Button(640.f, 360.f, 30, 30,
+    //				this->font, "EXIT", 30, 
+    //				sf::Color(200, 200, 200, 200), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
+    //				sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)));
+}
+
+void EndGame::addButton(
+    const std::string& key,
+    const float& y,
+    const float& width,
+    const float& height,
+    const unsigned& char_sz,
+    const std::string& text) {
+
+    float x = this->shape.getPosition().x + this->shape.getSize().x / 2.f - width / 2.f;
+
+    this->buttons[key] = new Button(
+    	x, y, width, height,
+    	this->font, text, char_sz,
+    	sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+    	sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)
+	);
 }
 
 void EndGame::initBackground() {
@@ -33,7 +51,8 @@ void EndGame::setText(const std::string& text) {
 
 void EndGame::update(const sf::Vector2f& mousePos) {
     for(auto& it: this->buttons) {
-	it->update(mousePos);
+	if(it.second)
+	    it.second->update(mousePos);
     }
 }
 
@@ -42,6 +61,7 @@ void EndGame::render(sf::RenderTarget* target) {
     target->draw(this->shape);
     target->draw(this->text);
     for(auto& it: this->buttons) {
-	it->render(target);
+	if(it.second)
+	    it.second->render(target);
     }
 }

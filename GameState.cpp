@@ -13,6 +13,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 
 //bersih-bersih
 GameState::~GameState() {
+    delete this->pMenu;
     delete this->endGame;
     for(auto& it: this->decks) {
 	delete it;
@@ -35,6 +36,10 @@ void GameState::initFonts() {
 // endgame ni blum jadi
 void GameState::initEndGame() {
     this->endGame = new EndGame(&this->font);
+    float width = 0.13f * this->window->getSize().x;
+    float height = 0.06f * this->window->getSize().y;
+    float y = 0.74f * this->window->getSize().y;
+    this->endGame->addButton("QUIT", y, width, height, 30, "Quit");
 }
 
 void GameState::initPause() {
