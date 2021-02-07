@@ -7,7 +7,17 @@ PauseMenu::PauseMenu(sf::Window* window, sf::Font* font) :font(font) {
 	   static_cast<float>(window->getSize().y)
     	)
     );
-    this->bg.setFillColor(sf::Color(20, 20, 20, 100)); 
+    this->bg.setFillColor(sf::Color(20, 20, 20, 100));
+    this->container.setSize(
+	sf::Vector2f(
+    	    static_cast<float>(window->getSize().x) / 4.f,
+    	    static_cast<float>(window->getSize().y) - std::floor(static_cast<float>(window->getSize().y) * (9.5f / 100.f))
+    	)
+    );
+    this->container.setPosition(
+	static_cast<float>(window->getSize().x) / 2.f - this->container.getSize().x / 2.f, 30.f
+    );
+    this->container.setFillColor(sf::Color(20, 20, 20, 200));
 }
 
 PauseMenu::~PauseMenu() {
@@ -34,7 +44,7 @@ void PauseMenu::addButton(
     	this->font, text, char_sz,
     	sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
     	sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)
-	);    
+	); 
 }
 
 void PauseMenu::update(const sf::Vector2f& mousePosView) {

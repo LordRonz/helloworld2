@@ -142,7 +142,13 @@ void GameState::update(const double& dt) {
     }
     else {
 	this->pMenu->update(this->mousePosView);
+	this->updatePauseMenuButtons();
     }
+}
+
+void GameState::updatePauseMenuButtons() {
+    if(this->pMenu->isButtonPressed("QUIT"))
+        this->endState();
 }
 
 //update tiap deck

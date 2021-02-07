@@ -32,6 +32,7 @@ private:
     void initFonts();
     void initPause();
     void initEndGame();
+    void updatePauseMenuButtons();
     void updateDecks(const double& dt);
     void updateEndGame(const double& dt);
     bool updatePlayer(const double& dt);
