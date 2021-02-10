@@ -88,7 +88,7 @@ void PlayerDeck::rearrange() {
     // maff stuff
     for(auto& it: this->cards) {
 	if(it)
-	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
+	    it->setPosition((1200.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 //render

@@ -22,6 +22,10 @@ void EndGame::initButtons() {
     //				sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0)));
 }
 
+bool EndGame::isButtonPressed(const std::string& key) {
+    return this->buttons[key] ? this->buttons[key]->isPressed() : false;
+}
+
 void EndGame::addButton(
     const std::string& key,
     const float& y,
@@ -45,8 +49,11 @@ void EndGame::initBackground() {
     this->shape.setFillColor(sf::Color(30, 30, 30, 100));
 }
 
-void EndGame::setText(const std::string& text) {
+void EndGame::setText(const std::string& text, const float& width, const float& height) {
     this->text.setString(text);
+    sf::FloatRect textRect = this->text.getLocalBounds();
+    this->text.setOrigin(textRect.left + textRect.width/2.0f, textRect.top  + textRect.height / 2.0f);
+    this->text.setPosition(sf::Vector2f(width / 2.0f, height / 2.0f));
 }
 
 void EndGame::update(const sf::Vector2f& mousePos) {

@@ -64,6 +64,8 @@ void Card::updateInput(const double& dt, const sf::Vector2f& mousePos) {
 	    this->sprite->setColor(sf::Color(255, 255, 255, 230));
 	    this->hover = false;
 	}
+	this->selected = false;
+	this->wasSelected = false;
     }
     this->clicked = !this->selected && this->wasSelected;
     this->wasSelected = this->selected;

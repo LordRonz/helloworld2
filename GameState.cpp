@@ -145,15 +145,18 @@ void GameState::update(const double& dt) {
 	else
 	    this->updateEndGame(dt);
     }
-    else {
-	this->pMenu->update(this->mousePosView);
-	this->updatePauseMenuButtons();
-    }
+    else 
+	this->updatePauseMenu();
 }
 
 void GameState::updatePauseMenuButtons() {
     if(this->pMenu->isButtonPressed("QUIT"))
         this->endState();
+}
+
+void GameState::updateEndMenuButtons() {
+    if(this->endGame->isButtonPressed("QUIT"))
+	this->endState();
 }
 
 //update tiap deck
@@ -190,8 +193,9 @@ void GameState::updateDecks(const double& dt) {
     for(unsigned i = 1, j = this->decks.size() - 1; i < j; ++i) {
 	if(this->decks[i]->getCardCount() == 0) {
 	    this->someoneWon = true;
-	    if(i == Player1) this->endGame->setText("YOU WIN");
-	    else this->endGame->setText("YOU LOSE");
+	    float width = this->window->getSize().x;
+	    float height = this->window->getSize().y;
+	    this->endGame->setText(i == Player1 ? "YOU WIN" : "YOU LOSE", width, height);
 	    return;
 	}
     }
@@ -224,6 +228,12 @@ void GameState::updateDecks(const double& dt) {
 
 void GameState::updateEndGame(const double& dt) {
     this->endGame->update(this->mousePosView);
+    this->updateEndMenuButtons();
+}
+
+void GameState::updatePauseMenu() {
+    this->pMenu->update(this->mousePosView);
+    this->updatePauseMenuButtons();
 }
 
 // cek apakah si player manusia ini memilih kartu yang jenisnya valid
@@ -292,6 +302,7 @@ bool GameState::updateComp(const double& dt) {
 		this->decks[Player2]->reset();
 		this->turn.reset();
 		this->turn[tmp - 1] = true;
+		this->cmpCards.clear();
 	    }
 	}
     }
@@ -333,6 +344,7 @@ bool GameState::updatePlayer(const double& dt) {
 		this->decks[Player1]->reset();
 		this->turn.reset();
 		this->turn[tmp - 1] = true;
+		this->cmpCards.clear();
 	    }
 	}
     }

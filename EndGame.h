@@ -16,7 +16,8 @@ public:
     ~EndGame();
     void update(const sf::Vector2f& mousePos);
     void render(sf::RenderTarget* target);
-    void setText(const std::string& text);
+    void setText(const std::string& text, const float& width, const float& height);
+    bool isButtonPressed(const std::string& key);
     void addButton(
 	const std::string& key,
 	const float& y,
