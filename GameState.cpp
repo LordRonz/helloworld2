@@ -48,6 +48,9 @@ void GameState::initPause() {
     float height = 0.06f * this->window->getSize().y;
     float y = 0.74f * this->window->getSize().y;
     this->pMenu->addButton("QUIT", y, width, height, 30, "Quit");
+    y /= 0.74f;
+    y *= 0.4f;
+    this->pMenu->addButton("RESUME", y, width, height, 30, "Resume");
 }
 
 //inisialisasi background
@@ -152,6 +155,8 @@ void GameState::update(const double& dt) {
 void GameState::updatePauseMenuButtons() {
     if(this->pMenu->isButtonPressed("QUIT"))
         this->endState();
+    else if(this->pMenu->isButtonPressed("RESUME"))
+	this->unpauseState();
 }
 
 void GameState::updateEndMenuButtons() {
