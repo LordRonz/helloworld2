@@ -2,7 +2,7 @@
 
 #include "Card.h"
 
-enum deck_type {Player0, Player1, Player2, Trash};
+enum Decks {Player0, Player1, Player2, Trash};
 
 class Deck {
 protected:

@@ -37,7 +37,7 @@ void Card::setPosition(const float& x, const float& y) {
 void Card::move(const double& dt, const float& dir_x, const float& dir_y) {
     if(!this->sprite) return;
     // maff stuff
-    const sf::Vector2f dirNorm = normalizeDir(dir_x, dir_y, this->sprite->getPosition().x, this->sprite->getPosition().y);
+    const sf::Vector2f dirNorm = VectorMath::normalizeDir(dir_x, dir_y, this->sprite->getPosition().x, this->sprite->getPosition().y);
 
     this->sprite->move(dirNorm * static_cast<float>(this->movSpeed * dt));
     this->buttSprite->move(dirNorm * static_cast<float>(this->movSpeed * dt));

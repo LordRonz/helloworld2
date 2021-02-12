@@ -63,7 +63,7 @@ bool BaseDeck::passCard(const unsigned int& trgt, const double& dt) {
     // top()
     if(!this->cards.empty() && this->cards.top()) {
 	this->passedCard = this->cards.top();
-	if(vectorDistance(this->cards.top()->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
+	if(VectorMath::vectorDistance(this->cards.top()->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    //disini cuma menggerakkan sprite cardnya, blum memindah pointernya
 	    this->cards.top()->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}

@@ -7,7 +7,7 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Audio.hpp"
 
-enum Suit { Diamonds = 1, Hearts, Clubs, Spades };
+enum class Suit { Diamonds = 1, Hearts, Clubs, Spades };
 
 class Card {
 protected:

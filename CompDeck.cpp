@@ -93,7 +93,7 @@ bool CompDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(this->selected < 0) return false;
     if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
-	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
+	if(VectorMath::vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    // kalo masuk sini berarti belum nyampe, gerakkin spritenya pake some maffs
 	    this->cards[this->selected]->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}

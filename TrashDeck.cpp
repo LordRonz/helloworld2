@@ -25,7 +25,7 @@ bool TrashDeck::passCard(const unsigned int& trgt, const double& dt) {
 	return this->throwDeck(dt);
 
     if(!this->cards.empty() && this->cards[0]) {
-	if(vectorDistance(this->cards[0]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
+	if(VectorMath::vectorDistance(this->cards[0]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    // masih gerakin spritenya, pointer masih di sini
 	    this->cards[0]->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}
@@ -48,7 +48,7 @@ bool TrashDeck::throwDeck(const double& dt) {
 	// jika suatu pointer kartu dalam vector null, lanjut iterasi berikutnya
 	if(!it) continue;
 	// kalo belum sampe, gerakin kartunya kearah pojok
-	if(vectorDistance(it->getPosition(), sf::Vector2f(1290.f, 360.f)) > 20.f)
+	if(VectorMath::vectorDistance(it->getPosition(), sf::Vector2f(1290.f, 360.f)) > 20.f)
 	    it->move(dt, 1290.f, 360.f);
 	else {
 	    //masuk sini, brarti udh nyampe, hapus kartu, atur pointernya jadi null supaya bisa

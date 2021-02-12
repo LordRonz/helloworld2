@@ -37,7 +37,7 @@ bool PlayerDeck::passCard(const unsigned int& trgt, const double& dt) {
     if(!this->cards.empty() && this->selected < static_cast<int>(this->cards.size()) && this->cards[this->selected]) {
 	this->passedCard = this->cards[this->selected];
 
-	if(vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
+	if(VectorMath::vectorDistance(this->cards[this->selected]->getPosition(), (*this->decks)[trgt]->getPosition()) > 20.f) {
 	    // masih gerakin spritenya, pointer masih di sini
 	    this->cards[this->selected]->move(dt, (*this->decks)[trgt]->getPosition().x, (*this->decks)[trgt]->getPosition().y);
 	}
@@ -88,7 +88,7 @@ void PlayerDeck::rearrange() {
     // maff stuff
     for(auto& it: this->cards) {
 	if(it)
-	    it->setPosition((1200.f / (this->cardCount + 1)) * i++, this->pos.y);
+	    it->setPosition((1160.f / (this->cardCount + 1)) * i++, this->pos.y);
     }
 }
 //render
