@@ -43,7 +43,7 @@ void Game::initWindow() {
 }
 
 void Game::initStates() {
-    this->states.push(new GameState(this->window, &this->states));
+    this->states.push(new MainMenuState(this->window, &this->states));
 }
 
 void Game::update() {
