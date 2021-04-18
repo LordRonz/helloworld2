@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/HelloWorld2.dir/main.cpp.o -o HelloWorld2  libLibsModule.a -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio 
