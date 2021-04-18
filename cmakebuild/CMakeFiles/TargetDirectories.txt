@@ -1,0 +1,4 @@
+/home/lordronz/Documents/coolyeah/strukdat/helloworld/helloworld2/cmakebuild/CMakeFiles/rebuild_cache.dir
+/home/lordronz/Documents/coolyeah/strukdat/helloworld/helloworld2/cmakebuild/CMakeFiles/edit_cache.dir
+/home/lordronz/Documents/coolyeah/strukdat/helloworld/helloworld2/cmakebuild/CMakeFiles/HelloWorld2.dir
+/home/lordronz/Documents/coolyeah/strukdat/helloworld/helloworld2/cmakebuild/CMakeFiles/LibsModule.dir
